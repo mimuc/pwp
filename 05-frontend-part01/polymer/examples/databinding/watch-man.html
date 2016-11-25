@@ -1,0 +1,25 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="watch-man">
+  <template>
+    <h3>Watch Man</h3>
+    <div>[[sentence]]</div>
+  </template>
+  <script>
+    Polymer({
+      is: 'watch-man',
+      properties: {
+        name: String,
+        adjective: String
+      },
+      observers: [
+        '_praise(name, adjective)'
+      ],
+      _praise: function(name, adjective) {
+        if (name && adjective) {
+          this.sentence = name + ' is really '  + adjective;
+        }
+      }
+    });
+  </script>
+</dom-module>

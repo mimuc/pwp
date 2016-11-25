@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="my-circle">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        align-items: center;
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+        color: white;
+        background-color: deeppink;
+        border-radius: 50%;
+      }
+
+      :host[raised] {
+        box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      :host > div {
+        flex: 1;
+        text-align: center;
+      }
+    </style>
+    <div>+</div>
+  </template>
+  <script>
+    Polymer({
+      is: 'my-circle',
+      properties: {
+        raised: Boolean
+      }
+    })
+  </script>
+</dom-module>

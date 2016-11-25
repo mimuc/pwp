@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+
+
+<dom-module id="array-binder">
+  <template>
+    <h3>Array Binder</h3>
+    <div>
+      <template is="dom-repeat" items="[[courses]]">
+        <div>
+          <h4>[[item.name]]</h4>
+          <div>This course takes place on [[item.day]].</div>
+        </div>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'array-binder',
+      properties: {
+        courses: {
+          type: Array,
+          value: function() {
+            return [];
+          },
+          notify: true
+        }
+      },
+      ready: function() {
+        this.courses = [
+          {
+            name: 'PWP',
+            day: 'Friday'
+          },
+          {
+            name: 'MMN',
+            day: 'Thursay'
+          },
+          {
+            name: 'DM',
+            day: 'Friday'
+          }
+        ]
+      }
+    });
+  </script>
+</dom-module>
