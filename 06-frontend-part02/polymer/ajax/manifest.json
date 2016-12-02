@@ -1,0 +1,6 @@
+{
+  "name": "ajax",
+  "short_name": "ajax",
+  "start_url": "/",
+  "display": "standalone"
+}
