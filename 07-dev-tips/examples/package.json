@@ -1,0 +1,27 @@
+{
+  "name": "07-examples",
+  "version": "1.0.0",
+  "description": "some examples for the 7th pwp session",
+  "private": true,
+  "devDependencies": {
+    "del": "^2.0.2",
+    "glob-all": "^3.0.1",
+
+    "gulp": "^3.8.5",
+    "gulp-html-extract": "^0.1.0",
+    "gulp-if": "^2.0.0",
+
+    "gulp-jscs": "^3.0.0",
+    "gulp-jscs-stylish": "^1.1.2",
+    "gulp-jshint": "^1.6.3",
+    "gulp-load-plugins": "^1.1.0",
+    "jshint-stylish": "^2.0.0",
+    "run-sequence": "^1.0.2"
+  },
+  "scripts": {
+    "lint": "gulp lint",
+    "build": ""
+  },
+  "author": "Tobias Seitz <tobi@tobitobi.de>",
+  "license": "ISC"
+}
