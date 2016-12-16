@@ -1,0 +1,18 @@
+{
+  "name": "polymer-demo",
+  "version": "0.0.1",
+  "description": "We demo some Polymer-swag",
+  "main": "index.thml",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "poylmer test",
+    "servesync": "polymer serve & browser-sync start --proxy localhost:8080 --files 'src/*.html, src/*.js, images/*' "
+  },
+  "author": "Tobi Seitz",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.18.5"
+  }
+}
