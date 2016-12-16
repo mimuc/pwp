@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body ng-app="pwp">
+<div class="container" ng-controller="TodoController">
+
+  <h2> ToDo List</h2>
+  <div> von: {{todo.user}}</div>
+
+
+  <div class="alert-success">
+    <div class="label" ng-hide="incompleteCount() == 0">
+      <span> Es sind {{incompleteCount()}} Items noch nicht erledigt </span>
+    </div>
+  </div>
+
+  <table class="table" >
+      <thead>
+      <tr>
+        <th>Description</th>
+        <th>Ready</th>
+        <th>Done</th>
+      </tr>
+      </thead>
+    <tbody>
+    <tr ng-repeat="item in todo.items | checkedItems">
+      <td>{{item.action |uppercase}}</td>
+      <td>{{item.ready}}</td>
+      <td><input type="checkbox" ng-model="item.done">
+        {{item.done}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+<!--  <div class="panel panel-default">
+    <div class="panel-heading"></div>
+    <div class="panel-body">
+      <h4>Hobbies: </h4>
+      <div>  </div>
+    </div>
+  </div>-->
+
+</div>
+
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+<script src="controller/controller.js"></script>
+<script src="filter/checkedItems.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+</body>
+</html>
