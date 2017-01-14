@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>To Do List</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body ng-app="pwp">
+
+
+    <div class="page-header">
+        <h1>To Do List</h1>
+    </div>
+
+    <div>
+        <h3>Test-Modul-Angular</h3>
+        <input ng-model="test"></input>
+        <div>{{::test}}</div>
+    </div>
+
+
+
+    <div class="container" ng-controller="TodoController">
+        <h2> von: {{::todo.user}}</h2>
+
+
+
+        <div class="alert-success">
+            <div class="label" ng-hide="incompleteCount() == 0">
+                <span> Es sind {{incompleteCount()}} Items noch nicht erledigt </span>
+            </div>
+        </div>
+
+        <hr />
+        <hr />
+
+        <table  class="table">
+            <thead>
+            <tr>
+                <th>Description</th>
+                <th>Done</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in todo.items | orderBy:'action' | checkedItems:showComplete">
+                <td>{{::item.action}}</td>
+                <td> <input type = "checkbox" ng-model="item.done"></td>
+                <td> {{::item.done}}</td>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+        <hr />
+        <hr />
+
+    <div class="panel panel-default" ng-repeat="user in users">
+        <div class="panel-heading">{{::user.userName}} </div>
+        <div class="panel-body">
+            <h4>Hobbies: </h4>
+            <div ng-repeat="hobby in user.hobbies"> {{::hobby}}, </div>
+        </div>
+    </div>
+
+
+
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
+    <script src="bower_components/angular/angular.js"></script>
+<script src="app.js"></script>
+    <script src="factories/getData.js"></script>
+    <script src="factories/getRestData.js"></script>
+<script src="controllers/controller.js"></script>
+
+<script src="filters/checkeditems.js"></script>
+
+
+<script src="components/version/version.js"></script>
+<script src="components/version/version-directive.js"></script>
+<script src="components/version/interpolate-filter.js"></script>
+
+</body>
+</html>
