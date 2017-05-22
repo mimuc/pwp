@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="author-submissions">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h2>Submission Overview</h2>
+      <p>TODO use property that has all the <strong>author's submissions</strong>. </p>
+      <div>
+        <h4>Example</h4>
+        <ul>
+          <li><a href="#/submission-details">Submission 1</a></li>
+        </ul>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    class AuthorSubmissions extends Polymer.Element {
+      static get is() {
+        return 'author-submissions';
+      }
+    }
+
+    window.customElements.define((AuthorSubmissions).is, AuthorSubmissions);
+  </script>
+</dom-module>

@@ -1,0 +1,41 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="submission-overview">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+
+    </style>
+
+
+    <div class="card">
+      <h2>Submissions for Conference XYZ</h2>
+      <p>
+        TODO this is where the conference chairs see all the submitted papers.
+      </p>
+
+      <table>
+        <tr>
+          <td><a href="#/submission-decision">Submission 1</a></td>
+          <td>accepted</td>
+        </tr>
+      </table>
+    </div>
+
+  </template>
+
+  <script>
+    class SubmissionOverview extends Polymer.Element {
+      static get is() {
+        return 'submission-overview';
+      }
+    }
+
+    window.customElements.define((SubmissionOverview).is, SubmissionOverview);
+  </script>
+</dom-module>

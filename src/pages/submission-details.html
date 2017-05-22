@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="submission-details">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+
+      }
+      table {
+        width: 100%;
+      }
+    </style>
+    <div class="card">
+      <h2>Submission Details</h2>
+      <p>TODO See wireframe</p>
+      <table>
+        <tr>
+        <td></td>
+        <td>Review</td>
+        <td>Score</td>
+        <td>Annotations</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><a href="#/review-details">Reviewer 1</a></td>
+          <td>3 (Borderline)</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Reviewer 2</td>
+          <td>2 (reject)</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Reviewer 3</td>
+          <td>5 (Strong Accept)</td>
+          <td>1</td>
+        </tr>
+      </table>
+      <p>
+        <a href="#/submission-overview">Back to Submission Overview</a>
+      </p>
+    </div>
+  </template>
+
+  <script>
+    class SubmissionDetails extends Polymer.Element {
+      static get is() {
+        return 'submission-details';
+      }
+    }
+
+    window.customElements.define((SubmissionDetails).is, SubmissionDetails);
+  </script>
+</dom-module>

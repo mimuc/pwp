@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="submission-decision">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+    <div class="card">
+      <h2>Submission Decision</h2>
+      <p>This is where the chairs can indicate whether the paper is accepted / rejected. </p>
+      <p>
+        <a href="#/submission-overview">Back to submissions</a>
+      </p>
+    </div>
+
+  </template>
+
+  <script>
+    class SubmissionDecision extends Polymer.Element {
+      static get is() {
+        return 'submission-decision';
+      }
+    }
+
+    window.customElements.define((SubmissionDecision).is, SubmissionDecision);
+  </script>
+</dom-module>

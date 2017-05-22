@@ -1,0 +1,30 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="sign-up">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h2>Sign-Up</h2>
+      <p>TODO</p>
+      <p><a href="#/log-in">Log in</a></p>
+    </div>
+
+  </template>
+
+  <script>
+    class SignUp extends Polymer.Element {
+      static get is() {
+        return 'sign-up';
+      }
+    }
+
+    window.customElements.define((SignUp).is, SignUp);
+  </script>
+</dom-module>

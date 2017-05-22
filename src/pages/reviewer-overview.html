@@ -1,0 +1,63 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="reviewer-overview">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h2>Reviewer Overview</h2>
+      <p>TODO</p>
+      <p>This is where the ConfChair can see all the reviewers</p>
+
+      <table>
+        <template is="dom-repeat" items="[[ reviewers ]]" as="r">
+          <tr>
+            <td>[[ r.name ]]</td>
+            <td>
+              <a href="#/review-request"><paper-icon-button icon="sumasy-icons:contact-mail"></paper-icon-button></a>
+            </td>
+          </tr>
+        </template>
+      </table>
+    </div>
+
+  </template>
+
+  <script>
+    class ReviewerOverview extends Polymer.Element {
+      static get is() {
+        return 'reviewer-overview';
+      }
+
+      static get properties() {
+        return {
+          reviewers: {
+            type: Array,
+            value: ()=> {
+              return [
+                {
+                  name: 'Andreas Butz',
+                  email: 'butz@ifi.lmu.de'
+                },
+                {
+                  name: 'Heinrich Hußmann',
+                  email: 'hußmann@ifi.lmu.de'
+                },
+              ]
+            }
+          }
+        }
+      }
+    }
+
+    window.customElements.define((ReviewerOverview).is, ReviewerOverview);
+  </script>
+</dom-module>

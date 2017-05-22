@@ -1,0 +1,29 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="conf-chair-dashboard">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h2>Conf Chair Dashboard</h2>
+      <p>A dashboard-like overview of what the conf-chairs can do. </p>
+    </div>
+  </template>
+
+  <script>
+    class ConfChairDashboard extends Polymer.Element {
+      static get is() {
+        return 'conf-chair-dashboard';
+      }
+    }
+
+    window.customElements.define((ConfChairDashboard).is, ConfChairDashboard);
+  </script>
+</dom-module>
