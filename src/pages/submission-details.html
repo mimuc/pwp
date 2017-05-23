@@ -1,71 +1,137 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../sumasy-icons.html">
 
 <dom-module id="submission-details">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
-        padding: 10px;
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
 
-      }
-      table {
-        width: 100%;
-      }
-    </style>
-    <div class="card">
-      <h2>Submission Details</h2>
-      <p>TODO See wireframe</p>
-      <table>
-        <tr>
-        <td></td>
-        <td>Review</td>
-        <td>Score</td>
-        <td>Annotations</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td><a href="#/review-details">Reviewer 1</a></td>
-          <td>3 (Borderline)</td>
-          <td>10</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Reviewer 2</td>
-          <td>2 (reject)</td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>Reviewer 3</td>
-          <td>5 (Strong Accept)</td>
-          <td>1</td>
-        </tr>
-      </table>
-      <p>
-        <a href="#/submission-overview">Back to Submission Overview</a>
-      </p>
-    </div>
-  </template>
+            }
 
-  <script>
-    class SubmissionDetails extends Polymer.Element {
-      static get is() {
-        return 'submission-details';
-      }
-      static get properties() {
-        return {
-          submission: {
+            table {
+                width: 100%;
+            }
+
+            paper-material {
+                padding: 5px;
+                width: 60px;
+                margin: 5px;
+            }
+
+            .info {
+                margin-bottom: 15px;
+            }
+
+            paper-card {
+                width: 100%;
+                --paper-card-header-text: {
+                    font-size: 40px;
+                };
+                margin-bottom: 20px;
+            }
+
+            paper-button > iron-icon {
+                padding-right: 8px;
+            }
+
+            .test {
+                margin: 15px;
+            }
+        </style>
+        <div class="card">
+            <h2>Submission Details</h2>
+            <paper-card heading="[[submission.title]]">
+                <template is="dom-repeat" items="{{ possibleActions }}">
+                    <paper-button>
+                        <iron-icon icon="sumasy-icons:[[item.icon]]"></iron-icon>
+                        [[item.text]]
+                    </paper-button>
+                </template>
+            </paper-card>
+            <div class="test">
+                <div class="info"><b>Authors: </b>
+                    <template is="dom-repeat" items="{{ submission.authors }}">
+                        <paper-material elevation="2">[[item]]</paper-material>
+                    </template>
+                </div>
+                <div class="info"><b>Tags: </b>
+                    <template is="dom-repeat" items="{{ submission.tags }}">
+                        <paper-material elevation="2">[[item]]</paper-material>
+                    </template>
+                </div>
+            </div>
+            <paper-card>
+                <div class="card-content">
+                    [[submission.abstract]]
+                </div>
+                <div class="card-actions">
+                    <paper-button>Share</paper-button>
+                    <paper-button>Explore!</paper-button>
+                </div>
+            </paper-card>
+            <table>
+                <tr>
+                    <td></td>
+                    <td>Review</td>
+                    <td>Score</td>
+                    <td>Annotations</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a href="#/review-details">Reviewer 1</a></td>
+                    <td>3 (Borderline)</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Reviewer 2</td>
+                    <td>2 (reject)</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Reviewer 3</td>
+                    <td>5 (Strong Accept)</td>
+                    <td>1</td>
+                </tr>
+            </table>
+            <p>
+                <a href="#/submission-overview">Back to Submission Overview</a>
+            </p>
+        </div>
+    </template>
+
+    <script>
+      class SubmissionDetails extends Polymer.Element {
+        static get is() {
+          return 'submission-details';
+        }
+
+        static get properties() {
+          return {
+            submission: {
               type: Object,
               value: function () {
                 return {
                   title: 'Great Paper for CHI next year',
                   paperLink: 'https://www.downloadPaper.com',
                   authors: ['Bastian Schweinsteiger', 'Jens Lehmann'],
-                  abstract: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,' +
-                  ' sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ' +
-                  'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-                  'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+                  abstract: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ' +
+                  'sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,' +
+                  ' sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.' +
+                  ' Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ' +
+                  'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod ' +
+                  'tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
+                  'At vero eos et accusam et justo duo dolores et ea rebum. ' +
+                  'Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
                   status: 'accepted',
                   tags: ['password security', 'usability security', 'CHI2017'],
                   reviews: [{
@@ -88,10 +154,19 @@
               reflectToAttribute: true,
               observer: '_submissionChanged'
             },
+            possibleActions: {
+              type: Array,
+              value: function () {
+                return [
+                  {icon: 'check-circle', text: 'Accepted'},
+                  {icon: 'file-download', text: 'Download Paper'},
+                  {icon: 'file-upload', text: 'Update Submission'}
+                ]
+              }
+            }
           };
         }
-    }
-
-    window.customElements.define((SubmissionDetails).is, SubmissionDetails);
-  </script>
+      }
+      window.customElements.define((SubmissionDetails).is, SubmissionDetails);
+    </script>
 </dom-module>
