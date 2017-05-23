@@ -53,6 +53,43 @@
       static get is() {
         return 'submission-details';
       }
+      static get properties() {
+        return {
+          submission: {
+              type: Object,
+              value: function () {
+                return {
+                  title: 'Great Paper for CHI next year',
+                  paperLink: 'https://www.downloadPaper.com',
+                  authors: ['Bastian Schweinsteiger', 'Jens Lehmann'],
+                  abstract: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,' +
+                  ' sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ' +
+                  'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
+                  'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+                  status: 'accepted',
+                  tags: ['password security', 'usability security', 'CHI2017'],
+                  reviews: [{
+                    review1: {
+                      reviewer: {
+                        name: 'Konrad Bartolotti',
+                        reviewerRating: 5
+                      },
+                      reviewLink: 'https://www.downloadReview1.com'
+                    }, review2: {
+                      reviewer: {
+                        name: 'Antonio Banderas',
+                        reviewerRating: 3
+                      },
+                      reviewLink: 'https://www.downloadReview2.com'
+                    }
+                  }]
+                }
+              },
+              reflectToAttribute: true,
+              observer: '_submissionChanged'
+            },
+          };
+        }
     }
 
     window.customElements.define((SubmissionDetails).is, SubmissionDetails);
