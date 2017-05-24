@@ -1,4 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="reviewer-profile">
@@ -13,7 +16,12 @@
 
     <div class="card">
       <h2>Reviewer Profile</h2>
-      <p>TODO see precision conference. paper-tabs here?</p>
+      <p>This is your reviewer profile. If not happened yet, please provide the information in all tabs.</p>
+      <paper-tabs scrollable>
+        <paper-tab>General Background</paper-tab>
+        <paper-tab>Reviewing History</paper-tab>
+        <paper-tab>Expertises</paper-tab>
+      </paper-tabs>
       <div>
         Other Roles:
         <ul>
