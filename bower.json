@@ -21,7 +21,10 @@
     "paper-styles": "PolymerElements/paper-styles#^2.0.0",
     "iron-form": "PolymerElements/iron-form#2.0-preview",
     "paper-input": "PolymerElements/paper-input#^2.0.0",
-    "paper-tabs": "PolymerElements/paper-tabs#2.0-preview"
+    "paper-tabs": "PolymerElements/paper-tabs#2.0-preview",
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.0",
+    "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
+    "paper-item": "PolymerElements/paper-item#^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "6.0.0-prerelease.5"

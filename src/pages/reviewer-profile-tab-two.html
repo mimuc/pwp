@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="reviewer-profile-tab-two">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+        </style>
+
+        <paper-dropdown-menu label="Dinosaurs">
+            <paper-listbox slot="dropdown-content" selected="1">
+                <paper-item>allosaurus</paper-item>
+                <paper-item>brontosaurus</paper-item>
+                <paper-item>carcharodontosaurus</paper-item>
+                <paper-item>diplodocus</paper-item>
+            </paper-listbox>
+        </paper-dropdown-menu>
+
+    </template>
+
+    <script>
+        class ReviewerProfileTabTwo extends Polymer.Element {
+            static get is() {
+                return 'reviewer-profile-tab-two';
+            }
+        }
+        window.customElements.define((ReviewerProfileTabTwo).is, ReviewerProfileTabTwo);
+    </script>
+</dom-module>
