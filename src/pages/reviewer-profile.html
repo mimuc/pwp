@@ -17,11 +17,19 @@
     <div class="card">
       <h2>Reviewer Profile</h2>
       <p>This is your reviewer profile. If not happened yet, please provide the information in all tabs.</p>
-      <paper-tabs scrollable>
-        <paper-tab>General Background</paper-tab>
-        <paper-tab>Reviewing History</paper-tab>
-        <paper-tab>Expertises</paper-tab>
+      <paper-tabs selected="{{selected}}" scrollable>
+        <paper-tab name="page-1">General Background</paper-tab>
+        <paper-tab name="page-2">Reviewing History</paper-tab>
+        <paper-tab name="page-3">Expertise</paper-tab>
       </paper-tabs>
+
+
+      <iron-pages selected="{{selected}}">
+        <div page-name="page-1">One</div>
+        <div page-name="page-2">Two</div>
+        <div page-name="page-3">Three</div>
+      </iron-pages>
+
       <div>
         Other Roles:
         <ul>
@@ -35,6 +43,14 @@
     class ReviewerProfile extends Polymer.Element {
       static get is() {
         return 'reviewer-profile';
+      }
+
+      static get properties() {
+        return {
+            selected: {
+                value: 0
+            }
+        }
       }
     }
 
