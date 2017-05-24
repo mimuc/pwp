@@ -26,11 +26,22 @@
                 margin: 5px;
             }
 
-            .info {
-                margin-bottom: 15px;
+            .abstract {
+                margin-top: 15px;
+
+                display: block;
             }
 
-            paper-card {
+            .single {
+                display: inline-block;
+                width: auto;
+            }
+
+            .multiple {
+                display: inline-block;
+            }
+
+            div > paper-card {
                 width: 100%;
                 --paper-card-header-text: {
                     font-size: 40px;
@@ -38,13 +49,15 @@
                 margin-bottom: 20px;
             }
 
+            .reviews {
+                width: auto;
+                display: compact;
+            }
+
             paper-button > iron-icon {
                 padding-right: 8px;
             }
 
-            .test {
-                margin: 15px;
-            }
         </style>
         <div class="card">
             <h2>Submission Details</h2>
@@ -56,25 +69,45 @@
                     </paper-button>
                 </template>
             </paper-card>
-            <div class="test">
-                <div class="info"><b>Authors: </b>
-                    <template is="dom-repeat" items="{{ submission.authors }}">
-                        <paper-material elevation="2">[[item]]</paper-material>
-                    </template>
-                </div>
-                <div class="info"><b>Tags: </b>
-                    <template is="dom-repeat" items="{{ submission.tags }}">
-                        <paper-material elevation="2">[[item]]</paper-material>
-                    </template>
-                </div>
-            </div>
             <paper-card>
                 <div class="card-content">
-                    [[submission.abstract]]
+                    <div class="multiple">
+                        <b>Authors: </b>
+                        <template is="dom-repeat" items="{{ submission.authors }}">
+                            <a href="" style="text-decoration: none">
+                                <paper-material class="single" elevation="2">[[item]]</paper-material>
+                            </a>
+                        </template>
+                    </div>
+                    <div class="multiple"><b>Tags: </b>
+                        <template is="dom-repeat" items="{{ submission.tags }}">
+                            <a href="" style="text-decoration: none">
+                                <paper-material class="single" elevation="2">[[item.name]]</paper-material>
+                            </a>
+                        </template>
+                    </div>
+                    <div class="abstract">
+                        <b>Abstract: </b><br>
+                        [[submission.abstract]]
+                    </div>
                 </div>
                 <div class="card-actions">
-                    <paper-button>Share</paper-button>
-                    <paper-button>Explore!</paper-button>
+                    <br>
+                    <b>Reviews</b><br>
+                    <template class="reviews" is="dom-repeat" items="{{ submission.reviews }}">
+                        <paper-card class="reviews">
+                            <div class="card-content">
+                                <paper-button>
+                                    <iron-icon icon="sumasy-icons:file-download"></iron-icon>
+                                    Download Review
+                                </paper-button>
+                            </div>
+                            <div class="card-actions">
+                                <b>Reviewer Score</b> [[item.reviewer.reviewerScore]]
+                            </div>
+                        </paper-card>
+                    </template>
+
                 </div>
             </paper-card>
             <table>
@@ -133,21 +166,19 @@
                   'At vero eos et accusam et justo duo dolores et ea rebum. ' +
                   'Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
                   status: 'accepted',
-                  tags: ['password security', 'usability security', 'CHI2017'],
+                  tags: [{name: 'password security', link: 'tag/1'}, {name: 'usability security', link: 'tag/2'}],
                   reviews: [{
-                    review1: {
-                      reviewer: {
-                        name: 'Konrad Bartolotti',
-                        reviewerRating: 5
-                      },
-                      reviewLink: 'https://www.downloadReview1.com'
-                    }, review2: {
-                      reviewer: {
-                        name: 'Antonio Banderas',
-                        reviewerRating: 3
-                      },
-                      reviewLink: 'https://www.downloadReview2.com'
-                    }
+                    reviewer: {
+                      name: 'Konrad Bartolotti',
+                      reviewerScore: 5
+                    },
+                    reviewLink: 'https://www.downloadReview1.com'
+                  }, {
+                    reviewer: {
+                      name: 'Antonio Banderas',
+                      reviewerScore: 3
+                    },
+                    reviewLink: 'https://www.downloadReview2.com'
                   }]
                 }
               },
