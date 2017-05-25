@@ -1,4 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="sign-up">
@@ -7,14 +10,111 @@
       :host {
         display: block;
         padding: 10px;
+
       }
+
+      paper-button {
+        padding: 5px 50px;
+      }
+
+      paper-button.green {
+        background-color: var(--app-primary-color);
+        color: white;
+      }
+
+      .form-section {
+        width: 50%;
+        margin-left: auto;
+        left: auto;
+        right: auto;
+      }
+
+      .space-left {
+        margin-left: 25%;
+      }
+
+      @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        .form-section {
+          width: 100%;
+          margin-left: auto;
+          left: auto;
+          right: auto;
+        }
+
+        paper-button {
+          width: 100%;
+        }
+      }
+
+      .hint {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 80%;
+        color: black;
+      }
+
+      h2 {
+        font-weight: 400;
+        text-align: center;
+        color: #0a3142;
+      }
+
+      .sub-title {
+        text-align: center;
+        color: #0a3142;
+      }
+
+
+      .right {
+        float: right;
+        margin-left: 15px;
+      }
+
+      .row {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+      }
+
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+
     </style>
 
     <div class="card">
-      <h2>Sign-Up</h2>
-      <p>TODO</p>
-      <p><a href="#/log-in">Log in</a></p>
+      <div class="space-left"></div>
+      <section class="form-section space-left">
+        <h2 class="center">Create your account</h2>
+        <p class="sub-title">
+          Organize your papers, reviews and conferences
+        </p>
+        <iron-form>
+          <form method="get" action="/form/handler">
+            <paper-input label="First Name"></paper-input>
+            <paper-input label="Last Name" type="password"></paper-input>
+            <paper-input label="Email"></paper-input>
+            <paper-input label="Password" type="password"></paper-input>
+
+            <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
+            <div class="row">
+              <paper-button raised class="green right">Confirm</paper-button>
+            </div>
+          </form>
+
+
+        </iron-form>
+        <div class="row">
+          <p class="hint">Already have an account? <a href="#/log-in">Log in</a></p>
+        </div>
+      </section>
     </div>
+
+
 
   </template>
 
