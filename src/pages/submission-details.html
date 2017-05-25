@@ -4,7 +4,10 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-label/iron-label.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../sumasy-icons.html">
 
 <dom-module id="submission-details">
@@ -13,7 +16,6 @@
             :host {
                 display: block;
                 padding: 10px;
-
             }
 
             table {
@@ -28,7 +30,6 @@
 
             .abstract {
                 margin-top: 15px;
-
                 display: block;
             }
 
@@ -52,22 +53,44 @@
             .reviews {
                 width: auto;
                 display: compact;
+                --paper-card-header-text: {
+                    font-weight: 500;
+                    font-size: 25px;
+                };
             }
 
             paper-button > iron-icon {
                 padding-right: 8px;
             }
 
+            .href {
+                text-decoration: none;
+            }
         </style>
         <div class="card">
             <h2>Submission Details</h2>
             <paper-card heading="[[submission.title]]">
-                <template is="dom-repeat" items="{{ possibleActions }}">
-                    <paper-button>
-                        <iron-icon icon="sumasy-icons:[[item.icon]]"></iron-icon>
-                        [[item.text]]
-                    </paper-button>
-                </template>
+                <div class="card-content">
+
+                    <paper-material class="single" elevation="1">
+                        <b>Status:</b>
+                        <iron-label> [[paperStatus.1.text]]
+                            <iron-icon style="color:[[paperStatus.1.color]]"
+                                       icon="sumasy-icons:[[paperStatus.1.icon]]"></iron-icon>
+                        </iron-label>
+                    </paper-material>
+
+                </div>
+                <div class="actions">
+                    <template is="dom-repeat" items="{{ possibleActions }}">
+                        <a href="[[item.link]]" class="href">
+                            <paper-button>
+                                <iron-icon icon="sumasy-icons:[[item.icon]]"></iron-icon>
+                                [[item.text]]
+                            </paper-button>
+                        </a>
+                    </template>
+                </div>
             </paper-card>
             <paper-card>
                 <div class="card-content">
@@ -75,14 +98,14 @@
                         <b>Authors: </b>
                         <template is="dom-repeat" items="{{ submission.authors }}">
                             <a href="" style="text-decoration: none">
-                                <paper-material class="single" elevation="2">[[item]]</paper-material>
+                                <paper-material class="single" elevation="1">[[item]]</paper-material>
                             </a>
                         </template>
-                    </div>
+                    </div><br>
                     <div class="multiple"><b>Tags: </b>
                         <template is="dom-repeat" items="{{ submission.tags }}">
                             <a href="" style="text-decoration: none">
-                                <paper-material class="single" elevation="2">[[item.name]]</paper-material>
+                                <paper-material class="single" elevation="1">[[item.name]]</paper-material>
                             </a>
                         </template>
                     </div>
@@ -93,23 +116,36 @@
                 </div>
                 <div class="card-actions">
                     <br>
-                    <b>Reviews</b><br>
+                    <p><b>Reviews</b></p>
                     <template class="reviews" is="dom-repeat" items="{{ submission.reviews }}">
-                        <paper-card class="reviews">
+                        <paper-card class="reviews href" heading="Review [[index]]">
                             <div class="card-content">
-                                <paper-button>
-                                    <iron-icon icon="sumasy-icons:file-download"></iron-icon>
-                                    Download Review
-                                </paper-button>
+                                <table>
+                                    <tr>
+                                        <td><b>Score:</b></td>
+                                        <td>[[item.reviewer.reviewerScore]]</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Annotations:</b></td>
+                                        <td>[[item.annotations]]</td>
+                                    </tr>
+                                </table>
                             </div>
                             <div class="card-actions">
-                                <b>Reviewer Score</b> [[item.reviewer.reviewerScore]]
+                                <a href="#/review-details" style="text-decoration: none">
+                                    <paper-button>
+                                        <iron-icon icon="sumasy-icons:pageview"></iron-icon>
+                                        View Review
+                                    </paper-button>
+
+                                </a>
                             </div>
                         </paper-card>
                     </template>
 
                 </div>
             </paper-card>
+            <!--
             <table>
                 <tr>
                     <td></td>
@@ -123,12 +159,7 @@
                     <td>3 (Borderline)</td>
                     <td>10</td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td>Reviewer 2</td>
-                    <td>2 (reject)</td>
-                    <td>5</td>
-                </tr>
+
                 <tr>
                     <td></td>
                     <td>Reviewer 3</td>
@@ -136,6 +167,7 @@
                     <td>1</td>
                 </tr>
             </table>
+            -->
             <p>
                 <a href="#/submission-overview">Back to Submission Overview</a>
             </p>
@@ -170,15 +202,24 @@
                   reviews: [{
                     reviewer: {
                       name: 'Konrad Bartolotti',
-                      reviewerScore: 5
+                      reviewerScore: '3 (Borderline)'
                     },
+                    annotations: 10,
                     reviewLink: 'https://www.downloadReview1.com'
                   }, {
                     reviewer: {
                       name: 'Antonio Banderas',
-                      reviewerScore: 3
+                      reviewerScore: '2 (reject)'
                     },
+                    annotations: 5,
                     reviewLink: 'https://www.downloadReview2.com'
+                  }, {
+                    reviewer: {
+                      name: 'Max Mustermann',
+                      reviewerScore: '5 (strong accept)'
+                    },
+                    annotations: 1,
+                    reviewLink: 'https://www.downloadReview3.com'
                   }]
                 }
               },
@@ -189,9 +230,17 @@
               type: Array,
               value: function () {
                 return [
-                  {icon: 'check-circle', text: 'Accepted'},
-                  {icon: 'file-download', text: 'Download Paper'},
-                  {icon: 'file-upload', text: 'Update Submission'}
+                  {icon: 'file-download', text: 'Download Paper', link: ''},
+                  {icon: 'edit', text: 'Edit Submission', link: '#/submission-overview'}
+                ]
+              }
+            }, paperStatus: {
+              type: Array,
+              value: function () {
+                return [
+                  {icon: 'check-circle', text: 'Accepted', color: 'green'},
+                  {icon: 'close', text: 'Declined', color: 'red'},
+                  {icon: 'schedule', text: 'In Progress', color: 'gray'}
                 ]
               }
             }

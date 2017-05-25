@@ -23,7 +23,9 @@
     "paper-input": "PolymerElements/paper-input#^2.0.0",
     "paper-card": "PolymerElements/paper-card#^2.0.0",
     "paper-item": "PolymerElements/paper-item#^2.0.0",
-    "paper-material": "PolymerElements/paper-material#^2.0.0"
+    "paper-material": "PolymerElements/paper-material#^2.0.0",
+    "iron-label": "PolymerElements/iron-label#^2.0.0",
+    "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "6.0.0-prerelease.5"
