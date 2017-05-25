@@ -95,10 +95,10 @@
         </p>
         <iron-form>
           <form method="get" action="/form/handler">
-            <paper-input label="First Name"></paper-input>
-            <paper-input label="Last Name" type="password"></paper-input>
-            <paper-input label="Email"></paper-input>
-            <paper-input label="Password" type="password"></paper-input>
+            <paper-input label="First Name" auto-validate required error-message="Please enter your first name"></paper-input>
+            <paper-input label="Last Name" auto-validate required error-message="Please enter your last name"></paper-input>
+            <paper-input label="Email" auto-validate required error-message="Please enter your email in correct format, e.g. me@example.com"></paper-input>
+            <paper-input label="Password" auto-validate required error-message="Please enter your password" type="password"></paper-input>
 
             <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
             <div class="row">
