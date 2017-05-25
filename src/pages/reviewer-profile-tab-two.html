@@ -13,6 +13,9 @@
 
                 padding: 10px;
             }
+            .input {
+                max-width: 70%;
+            }
         </style>
 
         <h2>Publication History
@@ -53,6 +56,11 @@
         class ReviewerProfileTabTwo extends Polymer.Element {
             static get is() {
                 return 'reviewer-profile-tab-two';
+            }
+            static get properties() {
+                return {
+                    userData: String
+                }
             }
             togglePublication() {
                 this.$.collapsePublication.toggle();

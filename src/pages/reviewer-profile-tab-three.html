@@ -97,6 +97,11 @@
             static get is() {
                 return 'reviewer-profile-tab-three';
             }
+            static get properties() {
+                return {
+                    userData: String
+                }
+            }
             constructor() {
                 super();
                 this.selections = ['Expert','Knowledgable','Passing', 'No Knowledge'];

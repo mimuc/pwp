@@ -21,7 +21,7 @@
 
         <h2>General Background</h2>
         <paper-dropdown-menu label="Your Occupation">
-            <paper-listbox slot="dropdown-content" selected="2">
+            <paper-listbox slot="dropdown-content" selected="{{selectedOccupation}}">
                 <dom-repeat items="[[occupations]]" as="occupation">
                     <template>
                         <paper-item>[[occupation]]</paper-item>
@@ -30,7 +30,7 @@
             </paper-listbox>
         </paper-dropdown-menu>
         <paper-dropdown-menu label="Your Disciplinary Background">
-            <paper-listbox slot="dropdown-content" selected="2">
+            <paper-listbox slot="dropdown-content" selected="{{selectedBackground}}">
                 <dom-repeat items="[[backgrounds]]" as="background">
                     <template>
                         <paper-item>[[background]]</paper-item>
@@ -53,6 +53,17 @@
                 super();
                 this.occupations = ['Practitioner','Researcher','Student'];
                 this.backgrounds = ['Computer Science','Engineering','Psychology', 'Social Science', 'Design'];
+            }
+            static get properties() {
+                return {
+                    selectedOccupation: {
+                        value: 2
+                    },
+                    selectedBackground: {
+                        value: 0
+                    },
+                    userData: String
+                }
             }
         }
         window.customElements.define((ReviewerProfileTabOne).is, ReviewerProfileTabOne);
