@@ -1,7 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="sign-up">
@@ -93,27 +96,47 @@
         <p class="sub-title">
           Organize your papers, reviews and conferences
         </p>
-        <iron-form>
-          <form method="get" action="/form/handler">
-            <paper-input label="First Name" auto-validate required error-message="Please enter your first name"></paper-input>
-            <paper-input label="Last Name" auto-validate required error-message="Please enter your last name"></paper-input>
-            <paper-input label="Email" auto-validate required error-message="Please enter your email in correct format, e.g. me@example.com"></paper-input>
-            <paper-input label="Password" auto-validate required error-message="Please enter your password" type="password"></paper-input>
-
-            <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
-            <div class="row">
-              <paper-button raised class="green right">Confirm</paper-button>
-            </div>
-          </form>
 
 
-        </iron-form>
+        Sign up with email or social login (facebook, google, github)
+        <paper-radio-group selected="{{loginType}}">
+          <paper-radio-button name="email">Email</paper-radio-button>
+          <paper-radio-button name="social">Social</paper-radio-button>
+        </paper-radio-group>
+
+
+        <template is="dom-if" if="{{loginType == 'email'}}">
+          <iron-form>
+            <form method="get" action="/form/handler">
+              <paper-input label="First Name" auto-validate required error-message="Please enter your first name"></paper-input>
+              <paper-input label="Last Name" auto-validate required error-message="Please enter your last name"></paper-input>
+              <paper-input label="Email" auto-validate required error-message="Please enter your email in correct format, e.g. me@example.com"></paper-input>
+              <paper-input label="Password" auto-validate required error-message="Please enter your password" type="password"></paper-input>
+
+              <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
+              <div class="row">
+                <paper-button raised class="green right">Confirm</paper-button>
+              </div>
+            </form>
+          </iron-form>
+        </template>
+
+        <template is="dom-if" if="{{loginType == 'social'}}">
+          <iron-form>
+            <form method="get" action="/form/handler">
+              Login with social etc
+            </form>
+
+          </iron-form>
+        </template>
+
         <div class="row">
           <p class="hint">Already have an account? <a href="#/log-in">Log in</a></p>
         </div>
-      </section>
-    </div>
 
+      </section>
+
+    </div>
 
 
   </template>
@@ -122,6 +145,10 @@
     class SignUp extends Polymer.Element {
       static get is() {
         return 'sign-up';
+      }
+      constructor() {
+        super();
+        this.loginType = 'social';
       }
     }
 
