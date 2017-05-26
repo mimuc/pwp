@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="volunteer-central">
@@ -6,34 +8,64 @@
     <style include="shared-styles">
       :host {
         display: block;
-
         padding: 10px;
       }
+
+      paper-card {
+        padding: 8px;
+        margin: 4px;
+       min-width: 300px;
+      }
     </style>
-
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
       <h2>Volunteer Central</h2>
-      <h3>Volunteer Agreement</h3>
-      <p>Reviewers need to confirm that they have read the agreement.</p>
+      <div class="layout horizontal wrap">
+        <div class="layout vertical">
+        <paper-card>
+          <h2>Profile</h2>
+        </paper-card>
 
-      <h3>Review Bidding</h3>
-      <p>Reviewers can bid for reviews here.</p>
+        <paper-card>
+          <h3>Volunteer Agreement</h3>
+          <p>Reviewers need to confirm that they have read the agreement.</p>
+        </paper-card>
+        </div>
 
-      <h4>Conference Title</h4>
-      <table>
-        <tr>
-          <td>Full Papers and Notes</td>
-          <td>
-            How many reviews can you write?<br />
-            <select>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-            </select>
-          </td>
-          <td>Submission deadline</td>
-          <td>Review deadline</td>
-        </tr>
-      </table>
+         <div class="layout vertical flex">
+          <paper-card>  
+          <h4>Conference Title</h4>
+          <table>
+            <tr>
+              <td>Full Papers and Notes</td>
+              <td>
+                How many reviews can you write?<br />
+                <select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </td>
+              <td>Submission deadline</td>
+              <td>Review deadline</td>
+            </tr>
+          </table>
+        </paper-card>
+         </div>
+ <div class="layout vertical">
+        <paper-card>
+          <h3>Review Bidding</h3>
+          <p>Reviewers can bid for reviews here.</p>
+        </paper-card>
+        <paper-card>
+          <h3>Review Bidding</h3>
+          <p>Reviewers can bid for reviews here.</p>
+        </paper-card>
+        <paper-card>
+          <h3>Review Bidding</h3>
+          <p>Reviewers can bid for reviews here.</p>
+        </paper-card>
+         </div>
+      </div>
       
   </template>
 
