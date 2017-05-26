@@ -1,5 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-behavior.html">
+<link rel="import" href="../sumasy-icons.html">
+
 
 <dom-module id="log-in">
   <template>
@@ -9,13 +15,328 @@
         display: block;
         padding: 10px;
       }
+
+      /* Social buttons */
+      .fbbtn {
+        background-color: #3b5998;
+        height: 45px;
+        width: 100%;
+        margin-bottom: 15px;
+        border-radius: 3px;
+        cursor: pointer;
+
+        -o-transition: color .2s ease-out, background .2s ease-in;
+        -ms-transition: color .2s ease-out, background .2s ease-in;
+        -moz-transition: color .2s ease-out, background .2s ease-in;
+        -webkit-transition: color .2s ease-out, background .2s ease-in;
+        transition: color .2s ease-out, background .2s ease-in;
+      }
+
+      .fbbtn:hover {
+        background-color: #5e7cbb
+      }
+
+      .fbbtn a span {
+        background: url('../../images/pages/log-in/facebook_icon.png') no-repeat 9px 5px;
+        height: 45px;
+        width: 45px;
+        display: inline-block;
+        float: left;
+        margin: 2px 0px 0px 2px;
+        background-size: 30px 30px;
+      }
+
+      .fbbtn label {
+        color: #fff;
+        padding: 12px 10px;
+        float: left;
+        font-size: 14px;
+        width: 61%;
+        border-left: 1px solid #c1cdcd;
+        cursor: pointer;
+      }
+
+      .googlebtn {
+        background-color: #cc3732;
+        height: 45px;
+        width: 100%;
+        margin-bottom: 15px;
+        border-radius: 3px;
+        cursor: pointer;
+
+        -o-transition: color .2s ease-out, background .2s ease-in;
+        -ms-transition: color .2s ease-out, background .2s ease-in;
+        -moz-transition: color .2s ease-out, background .2s ease-in;
+        -webkit-transition: color .2s ease-out, background .2s ease-in;
+        transition: color .2s ease-out, background .2s ease-in;
+      }
+
+      .googlebtn:hover {
+        background-color: #eb5651
+      }
+
+      .googlebtn a span {
+        background: url('../../images/pages/log-in/google_icon.png') no-repeat 9px 5px;
+        height: 45px;
+        width: 45px;
+        display: inline-block;
+        float: left;
+        margin: 2px 0px 0px 2px;
+        background-size: 30px 30px;
+      }
+
+      .googlebtn label {
+        color: #fff;
+        padding: 12px 10px;
+        float: left;
+        font-size: 14px;
+        width: 61%;
+        border-left: 1px solid #c1cdcd;
+        cursor: pointer;
+      }
+
+      .officebtn {
+        background-color: #da3b01;
+        height: 45px;
+        width: 100%;
+        margin-bottom: 15px;
+        border-radius: 3px;
+        cursor: pointer;
+
+        -o-transition: color .2s ease-out, background .2s ease-in;
+        -ms-transition: color .2s ease-out, background .2s ease-in;
+        -moz-transition: color .2s ease-out, background .2s ease-in;
+        -webkit-transition: color .2s ease-out, background .2s ease-in;
+        transition: color .2s ease-out, background .2s ease-in;
+      }
+
+      .officebtn:hover {
+        background-color: #f8561a
+      }
+
+      .officebtn a span {
+        background: url('../../images/pages/log-in/office365_icon.png') no-repeat 9px 5px;
+        height: 45px;
+        width: 45px;
+        display: inline-block;
+        float: left;
+        margin: 2px 0px 0px 2px;
+        background-size: 30px 30px;
+      }
+
+      .officebtn label {
+        color: #fff;
+        padding: 12px 10px;
+        float: left;
+        font-size: 14px;
+        width: 61%;
+        border-left: 1px solid #c1cdcd;
+        cursor: pointer;
+      }
+
+      .logo{
+        width: 320px;
+        left: 0;
+        right: 0;
+        top: 20%;
+        margin: auto;
+        position: absolute;
+        padding: 0px 0%;
+        text-align: center;
+      }
+
+      .footer{
+        width: 320px;
+        left: 0;
+        right: 0;
+        top: 80%;
+        margin: auto;
+        position: absolute;
+        padding: 0px 0%;
+        text-align: center;
+      }
+
+      .footer .footertext{
+        text-decoration: underline;
+      }
+
+      .login-form {
+        width: 320px;
+        padding: 0px 0%;
+        background: #eee;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        margin: auto;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+
+      .seperator {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #000;
+        line-height: 0.1em;
+        margin: 10px 0 20px;
+      }
+
+      .seperatortext {
+        background: #EEEEEE;
+        padding: 0 10px;
+      }
+
+      .email-login {
+
+      }
+
+      .email-login-buttons {
+        margin-bottom: 15px;
+      }
+
+      .password-forgotten {
+        margin-top: 35px;
+        cursor: pointer;
+      }
+
+      .btn-sign-in-email {
+        width: 60%;
+      }
+
+      .btn-sign-up {
+        width: 30%;
+      }
+
+      .hint {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 80%;
+        color: black;
+      }
+
+
+      @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        .login-form {
+          width: 100%;
+        }
+
+        .fbbtn {
+          width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+          left: auto;
+          right: auto;
+        }
+
+        .googlebtn {
+          width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+          left: auto;
+          right: auto;
+        }
+
+        .officebtn {
+          width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+          left: auto;
+          right: auto;
+        }
+        .btn-sign-in-email {
+          width: 55%;
+        }
+
+        .btn-sign-up {
+          width: 25%;
+        }
+
+
+
+      }
+
     </style>
 
-    <div class="card">
-      <h2>Login</h2>
-
-      <p>Not registered yet? <a href="#/sign-up">Sign up for free.</a></p>
+    <div class="logo">
+      LOGO
     </div>
+
+
+      <div class="login-form">
+        <div class="social-login" hidden$="{{loginVisible}}">
+          <form>
+            <div class="fbbtn">
+              <a href="#">
+                <span></span>
+                <label>Continue with Facebook</label>
+              </a>
+            </div>
+
+            <div class="googlebtn">
+              <a href="#">
+                <span></span>
+                <label>Continue with Google</label>
+              </a>
+            </div>
+
+            <div class="officebtn">
+              <a href="#">
+                <span></span>
+                <label>Continue with Office365</label>
+              </a>
+            </div>
+            <div class="seperator"><span class="seperatortext">or</span></div>
+            <paper-button raised class="indigo btn-sign-in-email" on-click="signInWithEmail">Sign in
+              with email
+            </paper-button>
+            <paper-button raised class="indigo btn-sign-up">Sign up</paper-button>
+
+            <div class="hint">by continuing you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></div>
+          </form>
+
+        </div>
+
+
+        <div class="email-login" hidden$="{{!loginVisible}}">
+          <iron-form id="email-form">
+            <form method="get">
+              <div class="email-login-buttons">
+                <paper-input label="Email" required auto-validate
+                             pattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+                             error-message="Please enter a valid email.">
+                  <iron-icon icon="sumasy-icons:email" slot="prefix"></iron-icon>
+                </paper-input>
+                <paper-input label="Password" required auto-validate
+                             error-message="Please enter your password." type="password">
+                  <iron-icon icon="sumasy-icons:lock" slot="prefix"></iron-icon>
+                </paper-input>
+              </div>
+              <span on-click="back" style="cursor: pointer"><iron-icon icon="sumasy-icons:arrow-back"
+                                                                       slot="prefix"></iron-icon>Back</span>
+              <paper-button raised class="indigo" on-click="_submit" style="float: right">Sign in
+              </paper-button>
+              <div class="password-forgotten">
+                Forgotten password?
+              </div>
+            </form>
+          </iron-form>
+        </div>
+      </div>
+
+
+    <div class="footer">
+      New to PROJECTNAME? <a href="/home"><span class="footertext">Find out more</span></a>
+    </div>
+
+
+
+
 
   </template>
 
@@ -25,6 +346,30 @@
       static get is() {
         return 'log-in';
       }
+
+      static get properties() {
+        return {
+          loginVisible: {
+            type: Boolean,
+            value: false,
+          }
+        }
+      }
+
+
+      signInWithEmail() {
+        this.loginVisible = !this.loginVisible;
+      }
+
+      back() {
+        this.loginVisible = !this.loginVisible;
+      }
+
+      _submit() {
+        console.log("SUbmitted");
+      }
+
+
     }
 
     window.customElements.define((LogIn).is, LogIn);
