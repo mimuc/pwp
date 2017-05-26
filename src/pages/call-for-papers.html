@@ -1,5 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/vaadin-date-picker/vaadin-date-picker.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 
 <dom-module id="call-for-papers">
   <template>
@@ -16,72 +22,297 @@
       table {
         width: 100%;
       }
+      a{
+        text-decoration: none;
+        color: var(--paper-green-500);
+      }
+      a:hover{
+        color: var(--paper-green-900);
+      }
+      a:visited{
+        text-decoration: none;
+      }
+      th{
+        background: var(--paper-green-400);
+        text-align: left;
+        padding-left: 15px;
+        color: #FFF;
+      }
+      td{
+        padding-left: 10px;
+      }
+      td {
+      }
+      td .cfp_centerContent{
+        float: left;
+        display:table;
+      }
+      .cfp_centerContent a{
+        vertical-align: middle;
+      }
+      tr:nth-child(even) {
+        background-color: var(--paper-green-50);
+      }
+      td img{
+        float: left;
+        height: 40px;
+        width: auto;
+        margin-right: 15px;
+      }
+      paper-item{
+        cursor: pointer;
+      }
+      .cfp_paperDates{
+        width: 100%;
+      }
+      .cfp_paperDates p{
+        width: 100%;
+        padding: 0.25em 1.5em;
+        margin:0;
+      }
+      tr:not(:first-child):hover{
+        background: var(--paper-green-100);
+      }
+      th:not(:last-child):hover{
+        cursor: pointer;
+        background: var(--paper-green-600);
+      }
     </style>
 
     <div class="card">
       <h1>Call for Papers</h1>
       <table>
         <tr>
-          <td>Conference</td>
-          <td>Location</td>
-          <td>Submission Deadline</td>
-          <td>Links</td>
+          <td>
+            <paper-input label="find Conference">
+              <iron-icon icon="search" slot="prefix"></iron-icon>
+            </paper-input>
+          </td>
+          <td>
+            <vaadin-date-picker label="filter by deadline"></vaadin-date-picker>
+          </td>
+          <td>
+            <paper-dropdown-menu label="sortByLocation">
+              <paper-listbox slot="dropdown-content" selected="1">
+                <template is="dom-repeat" items="[[ locs ]]" as="loc">
+                  <paper-item> [[ loc.location ]] </paper-item>
+                </template>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <paper-dropdown-menu label="sortByTopic">
+              <paper-listbox slot="dropdown-content" selected="1">
+                <template is="dom-repeat" items="[[ rF ]]" as="rfi">
+                  <paper-item> [[ rfi.rF ]] </paper-item>
+                </template>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
 
+          <td>
+
+          </td>
+        </tr>
+        <tr>
+          <th id="cfp_conf_table">Conference
+            <paper-tooltip for="cfp_conf_table" class="cfp_tooltip" position="top">Sort by conference</paper-tooltip>
+          </th>
+          <th id="cfp_impDat_table">Importand Dates
+            <paper-tooltip for="cfp_impDat_table" class="cfp_tooltip" position="top">Sort by deadline</paper-tooltip>
+          </th>
+          <th id="cfp_loc_table">Location
+            <paper-tooltip for="cfp_loc_table" class="cfp_tooltip" position="top">Sort by location</paper-tooltip>
+          </th>
+          <th id="cfp_resField_table">Researchfield
+            <paper-tooltip for="cfp_resField_table" class="cfp_tooltip" position="top">Sort by research field</paper-tooltip>
+          </th>
+          <th>Links</th>
         </tr>
         <template is="dom-repeat" items="[[ cfps ]]" as="cfp">
           <tr>
-            <td><a href="#/cfp-detail">[[ cfp.conference ]]</a></td>
-            <td>[[ cfp.location ]]</td>
-            <td>[[ cfp.deadline ]]</td>
-            <td><a href="[[ cfp.link ]]">Website</a></td>
+            <td>
+              <template is="dom-if" if="[[cfp.conferenceImageURL]]">
+                <img src="[[cfp.conferenceImageURL]]" alt="[[cfp.conference]]" />
+              </template>
+              <div class="cfp_centerContent">
+                <a href="#/cfp-detail/[[ cfp.paperid ]]" target="_self">[[ cfp.conference ]]</a>
+              </div>
+            </td>
+            <td>
+              <div class="cfp_paperDates">
+                <p>Submission Deadline: [[ cfp.deadline ]]</p>
+                <p>Start: [[ cfp.dates.start ]]</p>
+              </div>
+            </td>
+            <td><a href="https://www.google.de/maps/search/[[cfp.location]]" target="_blank">[[ cfp.location ]]</a></td>
+            <td>[[ cfp.researchField]]</td>
+            <td><a href="[[ cfp.link ]]" target="_blank">Website</a></td>
           </tr>
         </template>
       </table>
-
     </div>
-
+    <div class="card">
+      <h2>Now Accepting</h2>
+      <table>
+        <tr>
+          <th id="cfp_conf_table2">Conference
+            <paper-tooltip for="cfp_conf_table2" class="cfp_tooltip" position="top">Sort by conference</paper-tooltip>
+          </th>
+          <th id="cfp_impDat_table2">Importand Dates
+            <paper-tooltip for="cfp_impDat_table2" class="cfp_tooltip" position="top">Sort by deadline</paper-tooltip>
+          </th>
+          <th id="cfp_loc_table2">Location
+            <paper-tooltip for="cfp_loc_table2" class="cfp_tooltip" position="top">Sort by location</paper-tooltip>
+          </th>
+          <th id="cfp_resField_table2">Researchfield
+            <paper-tooltip for="cfp_resField_table2" class="cfp_tooltip" position="top">Sort by research field</paper-tooltip>
+          </th>
+          <th>Links</th>
+        </tr>
+        <template is="dom-repeat" items="[[ cfps ]]" as="cfp">
+          <tr>
+            <td>
+              <template is="dom-if" if="[[cfp.conferenceImageURL]]">
+                <img src="[[cfp.conferenceImageURL]]" alt="[[cfp.conference]]" />
+              </template>
+              <div class="cfp_centerContent">
+                <a href="#/cfp-detail/[[ cfp.paperid ]]" target="_self">[[ cfp.conference ]]</a>
+              </div>
+            </td>
+            <td>
+              <div class="cfp_paperDates">
+                <p>Submission Deadline: [[ cfp.deadline ]]</p>
+                <p>Start: [[ cfp.dates.start ]]</p>
+              </div>
+            </td>
+            <td><a href="https://www.google.de/maps/search/[[cfp.location]]" target="_blank">[[ cfp.location ]]</a></td>
+            <td>[[ cfp.researchField]]</td>
+            <td><a href="[[ cfp.link ]]" target="_blank">Website</a></td>
+          </tr>
+        </template>
+      </table>
+    </div>
   </template>
 
   <script>
     class CallForPapers extends Polymer.Element {
+        static get is() {
+          return 'call-for-papers';
+        }
 
-      static get is() {
-        return 'call-for-papers';
-      }
-
-      static get properties() {
-        return {
-          cfps: {
-            type: Array,
-            value: () => {
-              return [
-                {
-                  conference: 'CHI 2018',
-                  location: 'Montréal, Canada',
-                  dates: {
-                    start: '2018-04-30',
-                    end: '2018-05-06'
-                  },
-                  deadline: '2017-09-19',
-                  link : 'https://chi2018.acm.org'
-                },
-                {
-                  conference: 'MUM 2017',
-                  location: 'Stuttgart, Germany',
-                  dates: {
-                    start: '2017-11-26',
-                    end: '2017-11-29'
-                  },
-                  deadline: '2017-08-18',
-                  link : 'http://www.mum-conf.org/2017/'
+        static get properties() {
+          return {
+              cfps: {
+                type: Array,
+                value: () => {
+                  return this.cfps
+                } },
+              locs: {
+                type: Array,
+                value: () => {
+                   return this.locations
                 }
-              ]
-            }
+              },
+              rF: {
+                  type: Array,
+                  value: () => {
+                      return this.researchField
+                  }
+              }
           }
         }
-      }
-    }
 
+        /*
+            TODO: paperid is for Calling cfp-detail
+         */
+        static get cfps(){
+            return [
+                {
+                    conference: 'CHI 2018',
+                    conferenceImageURL: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png',
+                    location: 'Montréal, Canada',
+                    dates: {
+                        start: '2018-04-30',
+                        end: '2018-05-06',
+                    },
+                    deadline: '2017-09-19',
+                    link: 'https://chi2018.acm.org',
+                    paperid: '1234',
+                    researchField: 'physics'
+                },
+                {
+                    conference: 'MUM 2017',
+                    location: 'Stuttgart, Germany',
+                    dates: {
+                        start: '2017-11-26',
+                        end: '2017-11-29',
+                    },
+                    deadline: '2017-08-18',
+                    link: 'http://www.mum-conf.org/2017/',
+                    paperid: '3456',
+                    researchField: 'informatics'
+                },
+                {
+                    conference: 'MUM 2017',
+                    location: 'Stuttgart, Germany',
+                    dates: {
+                        start: '2017-11-26',
+                        end: '2017-11-29',
+                    },
+                    deadline: '2017-08-18',
+                    link: 'http://www.mum-conf.org/2017/',
+                    paperid: '3456',
+                    researchField: 'chemistry'
+                },
+            ];
+        }
+        static get locations() {
+            var locationList=[];
+            for( var loc in this.cfps ) {
+                var temp = this.cfps[loc].location;
+                if(locationList.isEmpty){
+                    locationList.push( { location: temp } );
+                }
+                else{
+                    var existInArray=false;
+                    for(var parsedLocs in locationList) {
+                        if(locationList[parsedLocs].location===temp) {
+                            existInArray=true;
+                            break;
+                        }
+                    }
+                    if(!existInArray) {
+                        locationList.push( { location: temp } );
+                    }
+                }
+            }
+            return locationList;
+        }
+        static get researchField(){
+            var researchList=[];
+            for(var rFC in this.cfps){
+                var temp = this.cfps[rFC].researchField;
+                if(researchList.isEmpty) {
+                    researchList.push( { rF: temp } );
+                }
+                else{
+                    var existInArray=false;
+                    for (var pRFC in researchList) {
+                        if(researchList[pRFC].rF === temp) {
+                            existInArray=true;
+                            break;
+                        }
+                    }
+                    if(!existInArray){
+                        researchList.push( { rF: temp } );
+                    }
+                }
+            }
+            console.log(researchList);
+            return researchList;
+        }
+    }
     window.customElements.define(CallForPapers.is, CallForPapers);
   </script>
 </dom-module>
