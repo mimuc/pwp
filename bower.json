@@ -21,7 +21,8 @@
     "paper-styles": "PolymerElements/paper-styles#^2.0.0",
     "iron-form": "PolymerElements/iron-form#2.0-preview",
     "paper-input": "PolymerElements/paper-input#^2.0.0",
-    "paper-card": "PolymerElements/paper-card#^2.0.0"
+    "paper-card": "PolymerElements/paper-card#^2.0.0",
+    "iron-image": "^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "6.0.0-prerelease.5"

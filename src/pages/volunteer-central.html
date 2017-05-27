@@ -1,6 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-image/iron-button.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="volunteer-central">
@@ -12,17 +14,36 @@
       }
 
       paper-card {
-        padding: 8px;
         margin: 4px;
-       min-width: 300px;
+      }
+
+      h1 {
+        line-height: 8px;
+      }
+
+      iron-image {
+        margin-right: 16px;
       }
     </style>
     <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
       <h2>Volunteer Central</h2>
-      <div class="layout horizontal wrap">
-        <div class="layout vertical">
+      <div class="horizontal layout wrap">
+        <div class="vertical layout">
         <paper-card>
-          <h2>Profile</h2>
+          <div class="card-content horizontal layout center">
+            <iron-image style="width:80px; height:80px; border-radius:50%;" 
+              sizing="cover" preload
+              src="../../images/pages/volunteer-central/avatar.png"></iron-image>
+            <div class="vertical layout">
+              <h2>[[ user.firstName ]] [[ user.lastName ]]</h2>
+              <h3>Some information</h3>
+            </div>
+          </div>
+          <div class="card-actions">
+            <div class="horizont layout right">
+             <paper-button>Edit</paper-button>
+            </div>
+          </div>
         </paper-card>
 
         <paper-card>
@@ -73,6 +94,18 @@
     class VolunteerCentral extends Polymer.Element {
       static get is() {
         return 'volunteer-central';
+      }
+
+      static get properties() {
+        return {
+        } 
+      }
+
+      constructor() {
+        super();
+        this.user = {};
+        this.user.firstName = "Maximilian";
+        this.user.lastName = "Hünemörder";
       }
     }
 
