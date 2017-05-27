@@ -1,0 +1,172 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+
+
+<dom-module id="reviewer-overview">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+
+    <div class="card">
+      <h1>Reviewer-Overview</h1>
+
+    <custom-style>
+    <style is="custom-style">
+      body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      }
+      paper-card {
+    	max-width: 500px;
+      }
+      .card-header { @apply --paper-font-headline; }
+      .card-light { color: var(--paper-grey-600); }
+      .card-location {
+    float: right;
+    font-size: 15px;
+    vertical-align: middle;
+      }
+      .card-rating{
+        display:flex;
+      }
+      .card-reserve { color: var(--google-blue-500); }
+      iron-icon.star-true {
+    --iron-icon-width: 16px;
+    --iron-icon-height: 16px;
+    color: var(--paper-amber-500);
+      }
+      iron-icon.star-false {
+        color: var(--paper-grey-500);
+        --iron-icon-width: 16px;
+        --iron-icon-height: 16px;
+       }
+    </style>
+    <template is="dom-repeat" items="[[reviewers]]">
+    <custom-style>
+            <paper-card >
+              <div class="card-actions">
+                <div class="horizontal justified">
+                  <div class="card-header">[[item.name]] [[item.surname]]
+                    <div class="card-location card-light">
+                      <iron-icon icon="communication:location-on"></iron-icon>
+                      <span>[[item.organisation]]</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <div class="card-content">
+
+            <template is="dom-repeat" items="[[item.skills]]">
+            <div class="card-rating">
+                <template is="dom-repeat" items="[[createArray(item.rating)]]">
+              <iron-icon class$="star-{{item}}" icon="star"></iron-icon>
+
+              </template>
+              <div style="width:5%">
+
+              </div>
+              <div>[[item.name]]</div>
+            </div>
+          </template>
+          </div>
+          <div class="card-actions">
+            <div class="horizontal justified">
+
+            <span >2/ [[item.maxReviews]]</span>
+
+            <paper-button class="card-reserve">Assign Paper</paper-button>
+
+            </div>
+          </div>
+
+        </paper-card>
+
+    </custom-style>
+  </template>
+
+  </custom-style>
+    </div>
+  </template>
+
+  <script>
+    class ReviewerOverview extends Polymer.Element {
+      static get is() { return 'reviewer-overview'; }
+      static get properties(){
+        return { reviewers:{}
+      };
+    }
+      constructor(){
+        super();
+        this.reviewers=[
+          {name:"Peer",
+          surname:"Kroeger",
+          title:"Professor",
+          organisation:"LMU Munich",
+          skills:[{name:"Data Mining",
+                    rating: 3 },
+                  {name:"BioInformatics",
+                    rating: 2}],
+          achievements:[],
+          reviewing:[{},{}],
+          maxReviews:3
+      },
+      {name:"Arthur",
+      surname:"Zimek",
+      title:"Professor",
+      organisation:"LMU Munich",
+      skills:[{name:"Data Mining",
+                rating: 4 },
+              {name:"BioInformatics",
+                rating: 1}],
+      achievements:[],
+      reviewing:[{},{}],
+      maxReviews:6
+  }];
+      }
+
+      createArray(n) {
+        var array= new Array(5);
+        for(var i=0; i<5;i++)
+        {
+          if(i<n)
+          {
+            array[i]=true;
+          }else{
+            array[i]=false;
+          }
+        }
+        return array;
+      }
+
+    }
+
+
+
+    window.customElements.define(ReviewerOverview.is, ReviewerOverview);
+  </script>
+</dom-module>
