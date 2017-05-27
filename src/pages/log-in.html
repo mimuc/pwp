@@ -215,7 +215,7 @@
       .hint {
         text-align: center;
         margin-top: 20px;
-        font-size: 80%;
+        font-size: 60%;
         color: black;
       }
 
@@ -256,9 +256,16 @@
         .btn-sign-up {
           width: 25%;
         }
+      }
 
+      a paper-button,
+      a:active paper-button,
+      a:visited paper-button {
+        color: #000;
+      }
 
-
+      a {
+        text-decoration: none;
       }
 
     </style>
@@ -295,7 +302,9 @@
             <paper-button raised class="indigo btn-sign-in-email" on-click="signInWithEmail">Sign in
               with email
             </paper-button>
-            <paper-button raised class="indigo btn-sign-up">Sign up</paper-button>
+            <a href="#/sign-up" tabindex="-1">
+              <paper-button raised class="indigo btn-sign-up">Sign up</paper-button>
+            </a>
 
             <div class="hint">by continuing you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></div>
           </form>
@@ -304,26 +313,32 @@
 
 
         <div class="email-login" hidden$="{{!loginVisible}}">
-          <iron-form id="email-form">
-            <form method="get">
+          <iron-form id="emailform" on-iron-form-response="_handleResponse">
+            <form method="get" action="http://httpbin.org/get">
               <div class="email-login-buttons">
                 <paper-input label="Email" required auto-validate
+                             value="{{ paperEmail }}"
                              pattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
                              error-message="Please enter a valid email.">
                   <iron-icon icon="sumasy-icons:email" slot="prefix"></iron-icon>
                 </paper-input>
                 <paper-input label="Password" required auto-validate
+                             value="{{ paperPassword }}"
                              error-message="Please enter your password." type="password">
                   <iron-icon icon="sumasy-icons:lock" slot="prefix"></iron-icon>
                 </paper-input>
               </div>
-              <span on-click="back" style="cursor: pointer"><iron-icon icon="sumasy-icons:arrow-back"
-                                                                       slot="prefix"></iron-icon>Back</span>
-              <paper-button raised class="indigo" on-click="_submit" style="float: right">Sign in
+              <span on-click="back" style="cursor: pointer">
+                <iron-icon icon="sumasy-icons:arrow-back"
+                           slot="prefix"></iron-icon>
+                Back
+              </span>
+              <paper-button raised class="indigo"
+                            on-tap="_submit"
+                            style="float: right">
+                Sign in
               </paper-button>
-              <div class="password-forgotten">
-                Forgotten password?
-              </div>
+              <div class="password-forgotten">Forgotten password?</div>
             </form>
           </iron-form>
         </div>
@@ -365,8 +380,19 @@
         this.loginVisible = !this.loginVisible;
       }
 
+      signUp(el) {
+        console.log(el);
+        el.addEventListener('transitionend', function(e) {
+          location.href = '#/sign-up';
+        });
+      }
+
+      _handleResponse(e) {
+        console.log('form response', e.detail.response);
+      }
+
       _submit() {
-        console.log("SUbmitted");
+        this.$.emailform.submit();
       }
 
 
