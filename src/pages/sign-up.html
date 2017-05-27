@@ -105,21 +105,24 @@
         </paper-radio-group>
 
 
-        <template is="dom-if" if="{{loginType == 'email'}}">
-          <iron-form>
-            <form method="get" action="/form/handler">
+
+          <iron-form id="signUpForm" on-iron-form-response="_handleResponse">
+            <form method="post" action="http://httpbin.org/post">
               <paper-input label="First Name" auto-validate required error-message="Please enter your first name"></paper-input>
               <paper-input label="Last Name" auto-validate required error-message="Please enter your last name"></paper-input>
               <paper-input label="Email" auto-validate required error-message="Please enter your email in correct format, e.g. me@example.com"></paper-input>
+              <!--TODO: add dropbox password feedback bars-->
               <paper-input label="Password" auto-validate required error-message="Please enter your password" type="password"></paper-input>
 
               <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
+
               <div class="row">
-                <paper-button raised class="green right">Confirm</paper-button>
+                <paper-button raised class="green right" on-tap="_submit">Confirm</paper-button>
               </div>
+              
             </form>
           </iron-form>
-        </template>
+
 
         <template is="dom-if" if="{{loginType == 'social'}}">
           <iron-form>
@@ -146,9 +149,20 @@
       static get is() {
         return 'sign-up';
       }
+
       constructor() {
         super();
         this.loginType = 'social';
+      }
+
+      _submit() {
+        this.$.signUpForm.submit();
+      }
+
+      _handleResponse(e) {
+        console.log('form response', JSON.stringify(e.detail.response));
+        //TODO: tell user if register was successfully
+       // this.$.signUpForm.remove();
       }
     }
 
