@@ -1,0 +1,29 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="edit-rebuttal">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+    <div class="card">
+      <h2>Rebuttal</h2>
+      <textarea>This is where your rebuttals go. (not really, but you know what TODO)</textarea>
+    </div>
+
+  </template>
+
+  <script>
+    class EditRebuttal extends Polymer.Element {
+      static get is() {
+        return 'edit-rebuttal';
+      }
+    }
+
+    window.customElements.define((EditRebuttal).is, EditRebuttal);
+  </script>
+</dom-module>

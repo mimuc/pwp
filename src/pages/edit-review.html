@@ -1,0 +1,31 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="edit-review">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h2>Edit Review</h2>
+      <p>This is where the reviewers edit the review for a particular submission.</p>
+      <p>The submission details are passed as an object to this element. </p>
+    </div>
+
+  </template>
+
+  <script>
+    class EditReview extends Polymer.Element {
+      static get is() {
+        return 'edit-review';
+      }
+    }
+
+    window.customElements.define((EditReview).is, EditReview);
+  </script>
+</dom-module>

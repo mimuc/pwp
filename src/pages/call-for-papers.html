@@ -1,0 +1,87 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="call-for-papers">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      h1 {
+        color: var(--my-favorite-color);
+      }
+
+      table {
+        width: 100%;
+      }
+    </style>
+
+    <div class="card">
+      <h1>Call for Papers</h1>
+      <table>
+        <tr>
+          <td>Conference</td>
+          <td>Location</td>
+          <td>Submission Deadline</td>
+          <td>Links</td>
+
+        </tr>
+        <template is="dom-repeat" items="[[ cfps ]]" as="cfp">
+          <tr>
+            <td><a href="#/cfp-detail">[[ cfp.conference ]]</a></td>
+            <td>[[ cfp.location ]]</td>
+            <td>[[ cfp.deadline ]]</td>
+            <td><a href="[[ cfp.link ]]">Website</a></td>
+          </tr>
+        </template>
+      </table>
+
+    </div>
+
+  </template>
+
+  <script>
+    class CallForPapers extends Polymer.Element {
+
+      static get is() {
+        return 'call-for-papers';
+      }
+
+      static get properties() {
+        return {
+          cfps: {
+            type: Array,
+            value: () => {
+              return [
+                {
+                  conference: 'CHI 2018',
+                  location: 'Montréal, Canada',
+                  dates: {
+                    start: '2018-04-30',
+                    end: '2018-05-06'
+                  },
+                  deadline: '2017-09-19',
+                  link : 'https://chi2018.acm.org'
+                },
+                {
+                  conference: 'MUM 2017',
+                  location: 'Stuttgart, Germany',
+                  dates: {
+                    start: '2017-11-26',
+                    end: '2017-11-29'
+                  },
+                  deadline: '2017-08-18',
+                  link : 'http://www.mum-conf.org/2017/'
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+
+    window.customElements.define(CallForPapers.is, CallForPapers);
+  </script>
+</dom-module>

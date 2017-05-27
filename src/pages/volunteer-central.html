@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="volunteer-central">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <h2>Volunteer Central</h2>
+      <h3>Volunteer Agreement</h3>
+      <p>Reviewers need to confirm that they have read the agreement.</p>
+
+      <h3>Review Bidding</h3>
+      <p>Reviewers can bid for reviews here.</p>
+
+      <h4>Conference Title</h4>
+      <table>
+        <tr>
+          <td>Full Papers and Notes</td>
+          <td>
+            How many reviews can you write?<br />
+            <select>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </td>
+          <td>Submission deadline</td>
+          <td>Review deadline</td>
+        </tr>
+      </table>
+    </div>
+  </template>
+
+  <script>
+    class VolunteerCentral extends Polymer.Element {
+      static get is() {
+        return 'volunteer-central';
+      }
+    }
+
+    window.customElements.define((VolunteerCentral).is, VolunteerCentral);
+  </script>
+</dom-module>

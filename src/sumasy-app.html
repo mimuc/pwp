@@ -1,0 +1,260 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+
+<link rel="import" href="sumasy-icons.html">
+
+<dom-module id="sumasy-app">
+  <template>
+    <style>
+
+      :host {
+        --app-dark-primary-color: #388E3C;
+        --app-primary-color: #4CAF50;
+        --app-light-primary-color: #C8E6C9;
+        --app-accent-color: #FFC107;
+        --app-primary-text-color: #212121;
+        --app-secondary-text-color: #757575;
+        --app-divider-color: #BDBDBD;
+        display: block;
+      }
+
+      app-drawer-layout:not([narrow]) [drawer-toggle] {
+        display: none;
+      }
+
+      app-header {
+        color: #fff;
+
+      }
+
+      app-toolbar {
+        background-color: var(--app-primary-color);
+        color: white;
+      }
+
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+
+      .drawer-list .category {
+        font-size: 10px;
+        color: var(--app-secondary-text-color);
+      }
+      .drawer-list .category:not(:first-of-type) {
+        padding: 0 16px;
+      }
+
+      .drawer-footer a {
+        padding-left: 16px;
+        color: var(--app-secondary-text-color);
+      }
+
+      a {
+        text-decoration: none;
+      }
+    </style>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed>
+      <!-- Drawer content -->
+      <app-drawer id="drawer" slot="drawer">
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]"
+                       attr-for-selected="name"
+                       class="drawer-list"
+                       role="navigation">
+          <span class="category">Common: </span><br />
+          <a name="call-for-papers" href="#/call-for-papers">CfPs</a>
+
+          <span class="category">Authors: </span><br />
+          <a name="edit-submission" href="#/edit-submission">Submit Paper</a>
+          <a name="author-submissions" href="#/author-submissions">My Submissions</a>
+
+          <span class="category">Reviewers: </span><br />
+          <a name="volunteer-central" href="#/volunteer-central">Volunteer Central</a>
+
+          <span class="category">Chairs: </span><br />
+          <a name="conf-chair-dashboard" href="#/conf-chair-dashboard">Dashboard</a>
+          <a name="reviewer-overview" href="#/reviewer-overview">Reviewer List</a>
+          <a name="submission-overview" href="#/submission-overview">Submissions</a>
+
+
+        </iron-selector>
+        <div class="drawer-footer">
+          <a href="#/log-in">Login</a>
+        </div>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header slot="header" condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="sumasy-icons:menu" drawer-toggle></paper-icon-button>
+            <div main-title>SUMASY</div>
+
+            <!-- TODO if not logged in, this icon should trigger something else. (login) -->
+            <paper-icon-button icon="sumasy-icons:account-circle"
+                               on-tap="_showProfile"></paper-icon-button>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="sumasy-page404"
+            role="main">
+          <home-page name="home"></home-page>
+          <call-for-papers name="call-for-papers"></call-for-papers>
+          <edit-submission name="edit-submission"></edit-submission>
+          <author-submissions name="author-submissions"></author-submissions>
+          <submission-details name="submission-details"></submission-details>
+          <review-details name="review-details"></review-details>
+          <log-in name="log-in"></log-in>
+          <sign-up name="sign-up"></sign-up>
+          <cfp-detail name="cfp-detail"></cfp-detail>
+          <author-profile name="author-profile"></author-profile>
+          <reviewer-profile name="reviewer-profile"></reviewer-profile>
+          <review-overview name="review-overview"></review-overview>
+          <reviewer-overview name="reviewer-overview"></reviewer-overview>
+          <review-request name="review-request"></review-request>
+          <submission-overview name="submission-overview"></submission-overview>
+          <submission-decision name="submission-decision"></submission-decision>
+          <volunteer-central name="volunteer-central"></volunteer-central>
+          <conf-chair-dashboard name="conf-chair-dashboard"></conf-chair-dashboard>
+          <edit-review name="edit-review"></edit-review>
+          <my-view404 name="sumasy-page404"></my-view404>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    class SumasyApp extends Polymer.Element {
+
+      static get is() {
+        return 'sumasy-app';
+      }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged'
+          },
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+        ];
+      }
+
+      ready() {
+        super.ready();
+        if (!this.routeData || !this.routeData.page) {
+          this.page = 'home';
+        }
+      }
+
+      _routePageChanged(page) {
+        // Polymer 2.0 will call with `undefined` on initialization.
+        // Ignore until we are properly called with a string.
+        if (page === undefined) {
+          return;
+        }
+
+        // If no page was found in the route data, page will be an empty string.
+        // Default to 'call-for-papers' in that case.
+        this.page = page || 'cfp-page';
+
+        // Close a non-persistent drawer when the page & route are changed.
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      }
+
+      _pageChanged(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('pages/' + page + '.html');
+        Polymer.importHref(
+          resolvedPageUrl,
+          null,
+          this._showPage404.bind(this),
+          true);
+        this.dispatchEvent(new CustomEvent('update-title', {detail: page}));
+        console.log('page changed: ', page);
+      }
+
+      _showPage404() {
+        this.page = 'sumasy-page404';
+      }
+
+      /**
+       * go to the profile page.
+       */
+      _showProfile() {
+        this._navigate('author-profile');
+      }
+
+      /**
+       * Use _only_ this method to navigate
+       *
+       * @author tobi.seitz
+       * @param page to navigate to. Needs to be known to our <iron-pages> element.
+       * @private
+       */
+      _navigate(page) {
+        // this.routeData.page = 'author-profile-page';
+        this.set('routeData.page', page);
+      }
+    }
+
+    window.customElements.define(SumasyApp.is, SumasyApp);
+  </script>
+</dom-module>

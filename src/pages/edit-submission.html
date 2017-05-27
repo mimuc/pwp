@@ -1,0 +1,118 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="edit-submission">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+      .card {
+
+      }
+    </style>
+    <div class="card">
+      <h1>Submit Paper</h1>
+      <p>Here you can submit your paper.</p>
+      <div id="test">
+        <iron-form id="sf"
+                   on-iron-form-response="_handleResponse">
+          <form method="get" action="http://httpbin.org/get">
+            <paper-input label="Title"
+                         value="{{ paperTitle }}"
+                         name="title"
+                         required
+                         pattern="[a-zA-z]+"
+                         auto-validate
+            ></paper-input>
+
+            <table>
+              <tr>
+                <th></th>
+                <th>Last name</th>
+                <th>First name</th>
+                <th>Email Address</th>
+                <th>Affiliation</th>
+              </tr>
+              <template is="dom-repeat" items="[[ authors ]]" as="author">
+                <tr>
+                  <td></td>
+                  <td>[[ author.lastname ]]</td>
+                  <td>[[ author.firstname ]]</td>
+                  <td>[[ author.email ]]</td>
+                  <td>[[ author.affiliation ]]</td>
+                </tr>
+              </template>
+            </table>
+
+            <template is="dom-repeat" items="[[ tests ]]">
+              <div>[[ item ]]</div>
+            </template>
+            <paper-button on-tap="_submit">Submit Paper</paper-button>
+          </form>
+        </iron-form>
+      </div>
+
+    </div>
+
+  </template>
+
+  <script>
+    class EditSubmission extends Polymer.Element {
+      static get is() {
+        return 'edit-submission';
+      }
+      static get properties() {
+        return {
+          authors: {
+            type: Array,
+            value: function() {
+              return [
+                {
+                  lastname: 'Mustermann',
+                  firstname: 'Max',
+                  email: 'm@mustermann.com',
+                  affiliation: 'LMU Munich'
+                },
+                {
+                  lastname: 'Mustermann',
+                  firstname: 'Veronika',
+                  email: 'v@mustermann.com',
+                  affiliation: 'TUM'
+                }
+              ]
+            }
+          }
+        }
+      }
+
+      attached() {
+        this.querySelector('#test').innerHTML = 'Hallo';
+        this.tests = ['a','b','c'];
+      }
+
+
+
+      _submit() {
+        this.$.sf.submit();
+      }
+
+      _handleResponse(e) {
+        console.log('form response', e.detail.response);
+        this.$.sf.remove();
+      }
+
+    }
+
+    window.customElements.define((EditSubmission).is, EditSubmission);
+  </script>
+</dom-module>

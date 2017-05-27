@@ -1,0 +1,34 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="review-overview">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+    <div class="card">
+      <h2>Review Overview</h2>
+      <p>This is where reviewers see the status of the papers they reviewed and they can edit their reviews here.</p>
+      <table>
+        <tr>
+          <td>Submission One</td>
+          <td><a href="#/edit-review">Provide Review</a></td>
+        </tr>
+      </table>
+    </div>
+  </template>
+
+  <script>
+    class ReviewOverview extends Polymer.Element {
+      static get is() {
+        return 'review-overview';
+      }
+    }
+
+    window.customElements.define((ReviewOverview).is, ReviewOverview);
+  </script>
+</dom-module>
