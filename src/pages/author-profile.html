@@ -1,4 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="author-profile">
@@ -8,20 +16,110 @@
         display: block;
 
         padding: 10px;
+
+        --paper-tabs-selection-bar-color: #388E3C;
+        --paper-checkbox-checked-color: #388E3C;
+        --paper-radio-button-checked-color: #388E3C;
+      }
+      paper-button {
+        text-transform: none;
+      }
+      table {
+        width:auto;
+      }
+      td {
+        padding: 0 40px 0 0;
+      }
+      paper-radio-button {
+        padding:0;
       }
     </style>
 
     <div class="card">
-      <h2>Profile</h2>
+      <h2>Author Profile</h2>
+      <paper-tabs selected="{{ selectedOption }}"
+                  attr-for-selected="option">
+        <paper-tab option="personal">Personal Data</paper-tab>
+        <paper-tab option="affiliation">Affiliation</paper-tab>
+        <paper-tab option="notifications">Notifications</paper-tab>
+      </paper-tabs>
+
+      <iron-pages selected="{{ selectedOption }}"
+                  attr-for-selected="option">
+        <div option="personal">
+          <h3>Your Personal Data</h3>
+          <iron-form id="updatePersonalData" on-iron-form-response="_handleResponse">
+            <form method="get" action="http://httpbin.org/get">
+              <template is="dom-repeat"
+                        items="{{ personalData }}">
+              <paper-input label="First Name" value="{{item.firstname}}" name="firstname"></paper-input>
+              <paper-input label="Last Name" value="{{item.lastname}}" name="lastname"></paper-input>
+              <paper-input label="Address" value="{{item.address}}" name="address"></paper-input>
+              <paper-input label="Country" value="{{item.country}}" name="country"></paper-input>
+              <paper-input label="Phone Number" value="{{item.phone}}" name="phone"></paper-input>
+              <paper-input label="Email Address" value="{{item.email}}" name="email"></paper-input>
+              <paper-input label="Website" value="{{item.website}}" name="website"></paper-input>
+              <paper-button raised on-tap="_submit">Update Personal Data</paper-button>
+              </template>
+            </form>
+          </iron-form>
+        </div>
+        <div option="affiliation">
+          <h3>Your Current Affiliation</h3>
+          <iron-form id="updateCurrentAffiliation" on-iron-form-response="_handleResponse">
+            <form method="get" action="http://httpbin.org/get">
+              <template is="dom-repeat"
+                        items="{{ currentAffiliation }}">
+              <paper-input label="Department" value="{{item.department}}" name="department"></paper-input>
+              <paper-input label="Institution" value="{{item.institution}}" name="institution"></paper-input>
+              <paper-input label="City" value="{{item.city}}" name="city"></paper-input>
+              <paper-input label="State" value="{{item.state}}" name="state"></paper-input>
+              <paper-input label="Country" value="{{item.country}}" name="country"></paper-input>
+              <paper-input label="Email Address" value="{{item.email}}" name="email"></paper-input>
+              <paper-input label="Website" value="{{item.website}}" name="website"></paper-input>
+              <paper-button raised on-tap="_submit">Update Current Affiliation</paper-button>
+              </template>
+            </form>
+          </iron-form>
+
+          <h3>Prior Affiliations</h3>
+          <template is="dom-repeat"
+                    items="{{ priorAffiliations }}">
+            <p>
+            <table>
+              <tr><td>Department:   </td><td>[[item.department]]  </td></tr>
+              <tr><td>Institution:  </td><td>[[item.institution]] </td></tr>
+              <tr><td>City:         </td><td>[[item.city]]        </td></tr>
+              <tr><td>State:        </td><td>[[item.state]]       </td></tr>
+              <tr><td>Country:      </td><td>[[item.country]]     </td></tr>
+              <tr><td>Email Address:</td><td>[[item.email]]       </td></tr>
+              <tr><td>Website:      </td><td>[[item.website]]     </td></tr>
+            </table>
+            </p>
+          </template>
+          <paper-button raised>Add Prior Affiliation</paper-button>
+        </div>
+        <div option="notifications">
+          <h3>Notification Settings</h3>
+          <iron-form id="updateNotificationSettings" on-iron-form-response="_handleResponse">
+            <form method="get" action="http://httpbin.org/get">
+              <template is="dom-repeat"
+                        items="{{ notificationSettings }}">
+                <p><paper-radio-group selected="{{item.emails}}">
+                <paper-radio-button name="activity">Send me emails about my SuMaSys activity</paper-radio-button><br>
+                <paper-radio-button name="service">Only send me required service emails</paper-radio-button>
+                </paper-radio-group></p>
+                <p><paper-checkbox checked="{{item.newpaper}}">New paper added for me to review</paper-checkbox><br>
+                <paper-checkbox checked="{{item.newconference}}">New conference added in my city</paper-checkbox><br>
+                <paper-checkbox checked="{{item.desktop}}">Enable desktop notifications</paper-checkbox><br>
+                <paper-button raised on-tap="_submit">Save</paper-button></p>
+              </template>
+            </form>
+          </iron-form>
+        </div>
+      </iron-pages>
 
 
-      <div>
-        Roles:
-        <ul>
-          <li><a href="#/author-profile">Author</a></li>
-          <li><a href="#/reviewer-profile">Reviewer</a></li>
-        </ul>
-      </div>
     </div>
   </template>
 
@@ -30,7 +128,99 @@
       static get is() {
         return 'author-profile';
       }
+
+      static get properties(){
+        return {
+          currentAffiliation: {
+            type: Array,
+            value: function () {
+              return [
+                {
+                  department: 'Media Informatics',
+                  institution: 'LMU',
+                  city: 'Munich',
+                  state: 'Bavaria',
+                  country: 'Germany',
+                  email: 'testheimer@cip.ifi.lmu.de',
+                  website: 'www.testheimer.lmu.de'
+                }]
+            }
+          },
+
+          priorAffiliations: {
+            type: Array,
+            value: function(){
+              return [
+                {
+                  department: 'Human Computer Interaction',
+                  institution: 'LMU',
+                  city: 'Munich',
+                  state: 'Bavaria',
+                  country: 'Germany',
+                  email: 'testheimer@cip.ifi.lmu.de',
+                  website: 'www.testheimer.lmu.de'
+                },
+                {
+                  department: 'Data Science',
+                  institution: 'TUM',
+                  city: 'Munich',
+                  state: 'Bavaria',
+                  country: 'Germany',
+                  email: 'testheimer@tum.de',
+                  website: 'www.testheimer.tum.de'
+                }
+              ]
+            }
+          },
+
+          personalData: {
+            type: Array,
+            value: function(){
+              return [
+                {
+                  firstname: 'Max',
+                  lastname: 'Testheimer',
+                  address: 'Teststr 1, 12345 Testhausen',
+                  country: 'Germany',
+                  phone: '0123456789',
+                  email: 'testheimer@web.de',
+                  website: 'www.testheimer.de'
+                }
+              ]
+            }
+          },
+
+          notificationSettings: {
+            type: Array,
+            value: function (){
+              return [
+                {
+                  emails: 'service',
+                  newpaper: 'checked',
+                  newconference: '',
+                  desktop: 'checked'
+                }
+              ]
+            }
+          }
+        }
+      }
+
+      _handleResponse(){
+        console.log('form response');
+      }
+
+      _submit(){
+        this.$.updateCurrentAffiliation.submit();
+      }
+
+      constructor(){
+        super();
+        this.selectedOption = 'personal';
+      }
     }
+
+
 
     window.customElements.define((AuthorProfile).is, AuthorProfile);
   </script>
