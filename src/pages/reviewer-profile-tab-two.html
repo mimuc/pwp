@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="reviewer-profile-tab-two">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+
+                padding: 10px;
+            }
+            .input {
+                max-width: 70%;
+            }
+        </style>
+
+        <h2>Publication History
+            <paper-icon-button icon="menu" on-click="togglePublication"></paper-icon-button>
+        </h2>
+        <iron-collapse id="collapsePublication">
+            <div>
+                <paper-input label="Number of full, peer-reviewed papers in HCI conferences" slot="prefix" class="input"></paper-input>
+                <paper-input label="Number of peer-reviewed papers accepted to or published in HCI and related journals" slot="prefix" class="input"></paper-input>
+                <paper-input label="Number of peer-reviewed publications (conference or journal) outside of the HCI field" slot="prefix" class="input"></paper-input>
+            </div>
+        </iron-collapse>
+        <h2>Reviewing History
+            <paper-icon-button icon="menu" on-click="toggleReviewing"></paper-icon-button>
+        </h2>
+        <iron-collapse id="collapseReviewing">
+            <div>
+                <paper-input label="Years reviewing Full Papers" slot="prefix" class="input"></paper-input>
+                <paper-input label="Years reviewing Short Papers" slot="prefix" class="input"></paper-input>
+                <paper-input label="Years reviewing Tutorials" slot="prefix" class="input"></paper-input>
+                <paper-input label="Years reviewing Practitioners category" slot="prefix" class="input"></paper-input>
+            </div>
+        </iron-collapse>
+        <h2>Presentation History
+            <paper-icon-button icon="menu" on-click="togglePresentation"></paper-icon-button>
+        </h2>
+        <iron-collapse id="collapsePresentation">
+            <div>
+                <paper-input label="Number of papers presented" slot="prefix" class="input"></paper-input>
+                <paper-input label="Number of tutorials presented" slot="prefix" class="input"></paper-input>
+                <paper-input label="Number of other presentations" slot="prefix" class="input"></paper-input>
+            </div>
+        </iron-collapse>
+
+    </template>
+
+    <script>
+        class ReviewerProfileTabTwo extends Polymer.Element {
+            static get is() {
+                return 'reviewer-profile-tab-two';
+            }
+            static get properties() {
+                return {
+                    userData: String
+                }
+            }
+            togglePublication() {
+                this.$.collapsePublication.toggle();
+            }
+            toggleReviewing() {
+                this.$.collapseReviewing.toggle();
+            }
+            togglePresentation() {
+                this.$.collapsePresentation.toggle();
+            }
+        }
+        window.customElements.define((ReviewerProfileTabTwo).is, ReviewerProfileTabTwo);
+    </script>
+</dom-module>

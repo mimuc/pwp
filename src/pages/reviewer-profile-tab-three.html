@@ -1,0 +1,123 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="reviewer-profile-tab-three">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+            .input {
+                margin-left: 10px;
+            }
+        </style>
+
+        <h2>CHI
+            <paper-icon-button icon="menu" on-click="toggleCHI"></paper-icon-button>
+        </h2>
+        <iron-collapse id="collapseCHI">
+            <div>
+                <h4>Devices</h4>
+                <dom-repeat items="[[chiDeviceCategories]]" as="category">
+                    <template>
+                        <paper-dropdown-menu label="[[category]]" class="input">
+                            <paper-listbox slot="dropdown-content" selected="3">
+                                <dom-repeat items="[[selections]]" as="selection">
+                                    <template>
+                                        <paper-item>[[selection]]</paper-item>
+                                    </template>
+                                </dom-repeat>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </template>
+                </dom-repeat>
+                <h4>Domain</h4>
+                <dom-repeat items="[[chiDomainCategories]]" as="category">
+                    <template>
+                        <paper-dropdown-menu label="[[category]]" class="input">
+                            <paper-listbox slot="dropdown-content" selected="3">
+                                <dom-repeat items="[[selections]]" as="selection">
+                                    <template>
+                                        <paper-item>[[selection]]</paper-item>
+                                    </template>
+                                </dom-repeat>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </template>
+                </dom-repeat>
+                <h4>Methods</h4>
+                <dom-repeat items="[[chiMethodCategories]]" as="category">
+                    <template>
+                        <paper-dropdown-menu label="[[category]]" class="input">
+                            <paper-listbox slot="dropdown-content" selected="3">
+                                <dom-repeat items="[[selections]]" as="selection">
+                                    <template>
+                                        <paper-item>[[selection]]</paper-item>
+                                    </template>
+                                </dom-repeat>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </template>
+                </dom-repeat>
+            </div>
+        </iron-collapse>
+
+        <h2>UIST
+            <paper-icon-button icon="menu" on-click="toggleUIST"></paper-icon-button>
+        </h2>
+        <iron-collapse id="collapseUIST">
+            <div>
+                <dom-repeat items="[[UISTCategories]]" as="category">
+                    <template>
+                        <paper-dropdown-menu label="[[category]]" class="input">
+                            <paper-listbox slot="dropdown-content" selected="3">
+                                <dom-repeat items="[[selections]]" as="selection">
+                                    <template>
+                                        <paper-item>[[selection]]</paper-item>
+                                    </template>
+                                </dom-repeat>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </template>
+                </dom-repeat>
+            </div>
+        </iron-collapse>
+    </template>
+
+    <script>
+        class ReviewerProfileTabThree extends Polymer.Element {
+            static get is() {
+                return 'reviewer-profile-tab-three';
+            }
+            static get properties() {
+                return {
+                    userData: String
+                }
+            }
+            constructor() {
+                super();
+                this.selections = ['Expert','Knowledgable','Passing', 'No Knowledge'];
+                this.chiDeviceCategories = ['Ambient Devices','Desktop Computers','Mobile Devices', 'Robot', 'Television'];
+                this.chiDomainCategories = ['Accessibility','Collaboration','Computer Vision', 'Creativity Support', 'Crowdsourcing'];
+                this.chiMethodCategories = ['Art','Contextual Inquiry','Eye Tracking', 'Field Study', 'Interview'];
+
+                this.UISTCategories = ['Camera-based UIs','Fabrication','Pen-based UIs', 'Security', 'Sensors'];
+            }
+            toggleCHI() {
+                this.$.collapseCHI.toggle();
+            }
+            toggleUIST() {
+                this.$.collapseUIST.toggle();
+            }
+        }
+        window.customElements.define((ReviewerProfileTabThree).is, ReviewerProfileTabThree);
+    </script>
+</dom-module>
