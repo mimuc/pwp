@@ -9,16 +9,67 @@
 
         padding: 10px;
       }
+
+      table {
+        border-spacing: 0;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: #cccccc;
+      }
+
+      th,
+      td {
+        border: 1px solid;
+        padding: 0 10px;
+      }
+
+      td .actions {
+        float: right;
+      }
     </style>
     <div class="card">
       <h2>Review Overview</h2>
-      <p>This is where reviewers see the status of the papers they reviewed and they can edit their reviews here.</p>
+      <h3>Title</h3>
+      <p>[[submission.title]]</p>
+      <h3>Current status</h3>
+      <p>[[submission.status]]</p>
       <table>
-        <tr>
-          <td>Submission One</td>
-          <td><a href="#/edit-review">Provide Review</a></td>
-        </tr>
+        <thead>
+          <tr>
+            <th><input type="checkbox" /></th>
+            <th>Review</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Annotations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template is="dom-repeat" items="{{reviews}}" as="review">
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td>
+                [[review.review_id]]
+                <span class="actions">
+                  <template is="dom-if" if="{{!is_mine(review)}}">
+                    <a href="#/review-details/[[review.review_id]]">View</a>
+                  </template>
+                  <template is="dom-if" if="{{is_mine(review)}}">
+                    <a href="#/edit-review/[[review.review_id]]">Edit</a>
+                  </template>
+                </span>
+              </td>
+              <td>[[review.status]]</td>
+              <td>[[review.date]]</td>
+              <td>[[review.annotations_count]]</td>
+            </tr>
+          </template>
+        </tbody>
       </table>
+      <button>
+        Download selected Reviews
+      </button>
     </div>
   </template>
 
@@ -26,6 +77,57 @@
     class ReviewOverview extends Polymer.Element {
       static get is() {
         return 'review-overview';
+      }
+
+      static get properties() {
+        return {
+          submissionId: Number,
+          submission: Object,
+          reviews: Array,
+          userId: Number,
+        };
+      }
+
+      ready() {
+        super.ready();
+        var submissionId = this.submissionId;
+        // fetch submission from server by submissionId
+        this.submission = {
+          author_id: 1,
+          title: 'On the Turing Completness of Time Machines',
+          status: 'Accepted by ConfChair',
+        }
+        // fetch reviews from server by submissionId
+        this.reviews = [
+          {
+            review_id: 1,
+            submission_id: 1,
+            status: 'reviewing',
+            date: '06.12.2023',
+            reviewer_id: 1,
+            annotations_count: 0,
+          },
+          {
+            review_id: 2,
+            submission_id: 1,
+            status: 'rejected',
+            date: '16.10.2023',
+            reviewer_id: 3,
+            annotations_count: 13,
+          },
+          {
+            review_id: 3,
+            submission_id: 1,
+            status: 'accepted',
+            date: '28.12.2023',
+            reviewer_id: 2,
+            annotations_count: 4,
+          },
+        ]
+      }
+
+      is_mine(review) {
+        return review.reviewer_id == this.userId;
       }
     }
 
