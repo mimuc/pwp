@@ -52,7 +52,12 @@
               <td>
                 [[review.review_id]]
                 <span class="actions">
-                  <a href="#/review-details/[[review.review_id]]">View</a>
+                  <template is="dom-if" if="{{!is_mine(review)}}">
+                    <a href="#/review-details/[[review.review_id]]">View</a>
+                  </template>
+                  <template is="dom-if" if="{{is_mine(review)}}">
+                    <a href="#/edit-review/[[review.review_id]]">Edit</a>
+                  </template>
                 </span>
               </td>
               <td>[[review.status]]</td>
@@ -79,6 +84,7 @@
           submissionId: Number,
           submission: Object,
           reviews: Array,
+          userId: Number,
         };
       }
 
@@ -118,6 +124,10 @@
             annotations_count: 4,
           },
         ]
+      }
+
+      is_mine(review) {
+        return review.reviewer_id == this.userId;
       }
     }
 
