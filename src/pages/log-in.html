@@ -134,7 +134,8 @@
         cursor: pointer;
       }
 
-      .logo{
+      /* Logo area */
+      .logo {
         width: 320px;
         left: 0;
         right: 0;
@@ -145,7 +146,8 @@
         text-align: center;
       }
 
-      .footer{
+      /* Footer area */
+      .footer {
         width: 320px;
         left: 0;
         right: 0;
@@ -156,10 +158,11 @@
         text-align: center;
       }
 
-      .footer .footertext{
+      .footer .footertext {
         text-decoration: underline;
       }
 
+      /* Login area */
       .login-form {
         width: 320px;
         padding: 0px 0%;
@@ -219,6 +222,10 @@
         color: black;
       }
 
+      paper-button.green {
+        background-color: var(--app-primary-color);
+        color: white;
+      }
 
       @media only screen and (max-width: 768px) {
         /* For mobile phones: */
@@ -249,6 +256,7 @@
           left: auto;
           right: auto;
         }
+
         .btn-sign-in-email {
           width: 55%;
         }
@@ -258,6 +266,11 @@
         }
       }
 
+      .back:hover {
+        color: gray;
+      }
+
+      /* Paper-button link */
       a paper-button,
       a:active paper-button,
       a:visited paper-button {
@@ -274,75 +287,78 @@
       LOGO
     </div>
 
+    <!-- Login-Form -->
+    <div class="login-form">
+      <div class="social-login" hidden$="{{loginVisible}}">
+        <form>
 
-      <div class="login-form">
-        <div class="social-login" hidden$="{{loginVisible}}">
-          <form>
-            <div class="fbbtn">
-              <a href="#">
-                <span></span>
-                <label>Continue with Facebook</label>
-              </a>
-            </div>
-
-            <div class="googlebtn">
-              <a href="#">
-                <span></span>
-                <label>Continue with Google</label>
-              </a>
-            </div>
-
-            <div class="officebtn">
-              <a href="#">
-                <span></span>
-                <label>Continue with Office365</label>
-              </a>
-            </div>
-            <div class="seperator"><span class="seperatortext">or</span></div>
-            <paper-button raised class="indigo btn-sign-in-email" on-click="signInWithEmail">Sign in
-              with email
-            </paper-button>
-            <a href="#/sign-up" tabindex="-1">
-              <paper-button raised class="indigo btn-sign-up">Sign up</paper-button>
+          <div class="fbbtn">
+            <a href="#">
+              <span></span>
+              <label>Continue with Facebook</label>
             </a>
+          </div>
 
-            <div class="hint">by continuing you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></div>
-          </form>
+          <div class="googlebtn">
+            <a href="#">
+              <span></span>
+              <label>Continue with Google</label>
+            </a>
+          </div>
 
-        </div>
+          <div class="officebtn">
+            <a href="#">
+              <span></span>
+              <label>Continue with Office365</label>
+            </a>
+          </div>
 
+          <div class="seperator"><span class="seperatortext">or</span></div>
+          <paper-button raised class="indigo btn-sign-in-email green" on-click="swapLoginVisible">Sign in
+            with email
+          </paper-button>
+          <a href="#/sign-up" tabindex="-1">
+            <paper-button raised class="indigo btn-sign-up">Sign up</paper-button>
+          </a>
+          <div class="hint">by continuing you agree to our <a href="#">privacy policy</a> and <a href="#">terms of
+            service</a></div>
+        </form>
+      </div>
 
-        <div class="email-login" hidden$="{{!loginVisible}}">
-          <iron-form id="emailform" on-iron-form-response="_handleResponse">
-            <form method="get" action="http://httpbin.org/get">
-              <div class="email-login-buttons">
-                <paper-input label="Email" required auto-validate
-                             value="{{ paperEmail }}"
-                             pattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
-                             error-message="Please enter a valid email.">
-                  <iron-icon icon="sumasy-icons:email" slot="prefix"></iron-icon>
-                </paper-input>
-                <paper-input label="Password" required auto-validate
-                             value="{{ paperPassword }}"
-                             error-message="Please enter your password." type="password">
-                  <iron-icon icon="sumasy-icons:lock" slot="prefix"></iron-icon>
-                </paper-input>
-              </div>
-              <span on-click="back" style="cursor: pointer">
+      <!-- E-Mail Login -->
+      <div class="email-login" hidden$="{{!loginVisible}}">
+        <iron-form id="emailform" on-iron-form-response="_handleResponse">
+          <form method="get" action="http://httpbin.org/get">
+
+            <div class="email-login-buttons">
+              <paper-input label="Email" required auto-validate
+                           value="{{ paperEmail }}"
+                           pattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+                           error-message="Please enter a valid email.">
+                <iron-icon icon="sumasy-icons:email" slot="prefix"></iron-icon>
+              </paper-input>
+              <paper-input label="Password" required auto-validate
+                           value="{{ paperPassword }}"
+                           error-message="Please enter your password." type="password">
+                <iron-icon icon="sumasy-icons:lock" slot="prefix"></iron-icon>
+              </paper-input>
+            </div>
+            <span class="back" on-click="swapLoginVisible" style="cursor: pointer">
                 <iron-icon icon="sumasy-icons:arrow-back"
                            slot="prefix"></iron-icon>
                 Back
-              </span>
-              <paper-button raised class="indigo"
-                            on-tap="_submit"
-                            style="float: right">
-                Sign in
-              </paper-button>
-              <div class="password-forgotten">Forgotten password?</div>
-            </form>
-          </iron-form>
-        </div>
+            </span>
+            <paper-button raised class="indigo green"
+                          on-tap="_submit"
+                          style="float: right">
+              Sign in
+            </paper-button>
+            <div class="password-forgotten">Forgotten password?</div>
+          </form>
+        </iron-form>
       </div>
+
+    </div>
 
 
     <div class="footer">
@@ -350,13 +366,9 @@
     </div>
 
 
-
-
-
   </template>
 
   <script>
-
     class LogIn extends Polymer.Element {
       static get is() {
         return 'log-in';
@@ -371,18 +383,14 @@
         }
       }
 
-
-      signInWithEmail() {
+      swapLoginVisible() {
         this.loginVisible = !this.loginVisible;
       }
 
-      back() {
-        this.loginVisible = !this.loginVisible;
-      }
 
       signUp(el) {
         console.log(el);
-        el.addEventListener('transitionend', function(e) {
+        el.addEventListener('transitionend', function (e) {
           location.href = '#/sign-up';
         });
       }
