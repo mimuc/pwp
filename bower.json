@@ -35,9 +35,11 @@
     "paper-radio-button": "PolymerElements/paper-radio-button#^2.0.0",
     "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
     "paper-toggle-button": "PolymerElements/paper-toggle-button#^2.0.0",
-    "zxcvbn": "^4.4.2",
+    "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.0",
+    "vaadin-date-picker": "vaadin/vaadin-date-picker#^2.0.0",
     "vaadin-grid": "3.0.0-alpha1",
-    "web-animations-js": "^2.2.5"
+    "web-animations-js": "^2.2.5",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "web-component-tester": "6.0.0-prerelease.5"
