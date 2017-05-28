@@ -36,6 +36,10 @@
         margin-left: 25%;
       }
 
+      .signup-social {
+        margin-top: 20px;
+      }
+
       @media only screen and (max-width: 768px) {
         /* For mobile phones: */
         .form-section {
@@ -67,7 +71,6 @@
         text-align: center;
         color: #0a3142;
       }
-
 
       .right {
         float: right;
@@ -199,10 +202,6 @@
         --paper-progress-active-color: var(--paper-light-green-a700);
       }
 
-      .signup-social {
-        margin-top: 20px;
-      }
-
     </style>
 
     <div class="card">
@@ -272,7 +271,6 @@
                 error-message="Please enter your email in correct format, e.g. me@example.com">
               </paper-input>
 
-              <!--TODO: add dropbox password feedback bars-->
               <paper-input
                 id="password"
                 type="password"
@@ -293,7 +291,6 @@
               </paper-progress>
 
               <div class="password-hint">{{ passwordFeedback }}</div>
-
 
               <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
 
@@ -345,7 +342,6 @@
 
     </div>
 
-
   </template>
 
   <script src="../../bower_components/zxcvbn/dist/zxcvbn.js"></script>
@@ -373,6 +369,7 @@
         };
       }
 
+      // keep the ui clean - either show email or social sign up
       _changeSignUpView(e) {
         var param = e.target.getAttribute('data-param');
         if(param == 'email') {
@@ -386,12 +383,14 @@
         var userInputPassword = this.$.password.value;
         if(userInputPassword.length > 0) {
           this.hidePasswordFeedbackBars = false;
-        } else {
+        } else { // hide the feedback bars if input is empty
           this.hidePasswordFeedbackBars = true;
         }
+        // call zxcvbn lib to analyze password
         var analysis = zxcvbn(userInputPassword);
         this.passwordFeedback = analysis.feedback.warning;
 
+        // update ui for password feedback based on password score
         switch (analysis.score) {
           case 0: this.passwordScore = 20; this.color = 'red'; break;
           case 1: this.passwordScore = 40; this.color = 'orange'; break;
