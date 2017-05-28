@@ -20,7 +20,14 @@
     "paper-button": "PolymerElements/paper-button#^2.0.0",
     "paper-styles": "PolymerElements/paper-styles#^2.0.0",
     "iron-form": "PolymerElements/iron-form#2.0-preview",
-    "paper-input": "PolymerElements/paper-input#^2.0.0"
+    "paper-input": "PolymerElements/paper-input#^2.0.0",
+    "vaadin-grid": "3.0.0-alpha1",
+    "paper-card": "PolymerElements/paper-card#^2.0.0",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
+    "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
+    "paper-item": "PolymerElements/paper-item#^2.0.0",
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.0",
+    "web-animations-js": "^2.2.5"
   },
   "devDependencies": {
     "web-component-tester": "6.0.0-prerelease.5"
