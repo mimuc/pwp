@@ -86,6 +86,86 @@
         clear: both;
       }
 
+      .btn-social {
+        height: 45px;
+        width: 100%;
+        margin-bottom: 15px;
+        border-radius: 3px;
+        cursor: pointer;
+
+        -o-transition: color .2s ease-out, background .2s ease-in;
+        -ms-transition: color .2s ease-out, background .2s ease-in;
+        -moz-transition: color .2s ease-out, background .2s ease-in;
+        -webkit-transition: color .2s ease-out, background .2s ease-in;
+        transition: color .2s ease-out, background .2s ease-in;
+      }
+
+      .btn-social label {
+        color: #fff;
+        padding: 12px 10px;
+        float: left;
+        font-size: 14px;
+        width: 61%;
+        border-left: 1px solid #c1cdcd;
+        cursor: pointer;
+      }
+
+      .btn-facebook {
+        background-color: #3b5998;
+      }
+
+      .btn-facebook:hover {
+        background-color: #5e7cbb
+      }
+
+      .btn-facebook a span {
+        background: url('../../images/pages/sign-up/facebook_icon.png') no-repeat 9px 5px;
+      }
+
+      .btn-google {
+        background-color: #cc3732;
+      }
+
+      .btn-google:hover {
+        background-color: #eb5651
+      }
+
+      .btn-google a span {
+        background: url('../../images/pages/sign-up/google_icon.png') no-repeat 9px 5px;
+      }
+
+      .btn-twitter {
+        background-color: #55acee;
+      }
+
+      .btn-twitter:hover {
+        background-color: #2795e9;
+      }
+
+      .btn-twitter a span {
+        background: url('../../images/pages/sign-up/twitter_icon.png') no-repeat 9px 5px;
+      }
+
+      .btn-github {
+        background-color: #444;
+      }
+
+      .btn-github:hover {
+        background-color: #2b2b2b;
+      }
+
+      .btn-github a span{
+        background: url('../../images/pages/sign-up/github_icon.svg') no-repeat 9px 5px;
+      }
+
+      .btn-social a span {
+        height: 45px;
+        width: 45px;
+        display: inline-block;
+        float: left;
+        margin: 2px 0px 0px 2px;
+        background-size: 30px 30px;
+      }
 
     </style>
 
@@ -97,7 +177,8 @@
           Organize your papers, reviews and conferences
         </p>
 
-        Sign up with email or social login (facebook, google, github)
+        Sign up with email or use social login (Facebook, Google, Twitter, Github) <br>
+
         <paper-radio-group selected="{{loginType}}">
           <paper-radio-button name="email" on-tap="_changeSignUpView" data-param="email">Email</paper-radio-button>
           <paper-radio-button name="social" on-tap="_changeSignUpView" data-param="social">Social</paper-radio-button>
@@ -122,7 +203,35 @@
           </form>
 
           <form hidden$="{{isSignupEmail}}" method="get" action="/form/handler">
-              social logins
+
+            <div class="btn-social btn-facebook">
+              <a href="#">
+                <span></span>
+                <label>Continue with Facebook</label>
+              </a>
+            </div>
+
+            <div class="btn-social btn-google">
+              <a href="#">
+                <span></span>
+                <label>Continue with Google</label>
+              </a>
+            </div>
+
+            <div class="btn-social btn-twitter">
+              <a href="#">
+                <span></span>
+                <label>Continue with Twitter</label>
+              </a>
+            </div>
+
+            <div class="btn-social btn-github">
+              <a href="#">
+                <span></span>
+                <label>Continue with Github</label>
+              </a>
+            </div>
+
           </form>
 
 
