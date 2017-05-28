@@ -1,6 +1,14 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../shared-styles.html">
+<!-- My own imports -->
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 
 <dom-module id="reviewer-overview">
   <template>
@@ -13,49 +21,195 @@
     </style>
 
     <div class="card">
-      <h2>Reviewer Overview</h2>
-      <p>TODO</p>
-      <p>This is where the ConfChair can see all the reviewers</p>
+      <!-- Header -->
+      <h2>Reviewer-Overview</h2>
 
-      <table>
-        <template is="dom-repeat" items="[[ reviewers ]]" as="r">
-          <tr>
-            <td>[[ r.name ]]</td>
-            <td>
-              <a href="#/review-request"><paper-icon-button icon="sumasy-icons:contact-mail"></paper-icon-button></a>
-            </td>
-          </tr>
-        </template>
-      </table>
+      <!-- Custom style for reviewer-cards-->
+    <custom-style>
+    <style is="custom-style">
+      body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto';
+      }
+      paper-card {
+      max-width: 500px;
+      }
+      .card-header { @apply --paper-font-headline; }
+      .card-light { color: var(--paper-grey-600); }
+      .card-location {
+    float: right;
+    font-size: 15px;
+    vertical-align: middle;
+      }
+      .card-rating{
+        display:flex;
+      }
+      .card-reserve { color: var(--google-green-500);}
+        .card-reserve2 { color: var(--google-gray-500);}
+      iron-icon.star-true {
+    --iron-icon-width: 16px;
+    --iron-icon-height: 16px;
+    color: var(--paper-amber-500);
+      }
+      iron-icon.star-false {
+        color: var(--paper-grey-500);
+        --iron-icon-width: 16px;
+        --iron-icon-height: 16px;
+       }
+       paper-icon-button.green {
+         color: var(--paper-green-500);
+         float: right;
+     --paper-icon-button-ink-color: var(--paper-indigo-500);
+      }
+   paper-icon-button.green:hover {
+     background-color: var(--paper-green-500);
+     color: white;
+   }
+    </style>
+    <!--Repeat for ech card-->
+    <template is="dom-repeat" items="[[reviewers]]">
+    <custom-style>
+            <paper-card >
+              <div class="card-actions" >
+                <div class="horizontal justified">
+                  <!--Reviewer full name-->
+                  <div class="card-header">[[item.name]] [[item.surname]]
+                    <!-- Reviewer location/workplace + location icon-->
+                    <div class="card-location card-light">
+                      <iron-icon icon="communication:location-on"></iron-icon>
+                      <span>[[item.organisation]]</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <div class="card-content">
+            <!--TODO on icon tap skillset replaced with achievements of reviewer-->
+
+            <!--Reviewer Skillset-->
+            <template is="dom-repeat" items="[[item.skills]]">
+            <div class="card-rating">
+              <!--create as many stars as the rating says-->
+                <template is="dom-repeat" items="[[createArray(item.rating)]]">
+              <iron-icon class$="star-{{item}}" icon="star"></iron-icon>
+              </template>
+              <div style="width:5%">
+              </div>
+              <!--skill name-->
+              <div>[[item.name]]</div>
+            </div>
+          </template>
+          <div style="height:30px;">
+            <paper-icon-button on-tap="switchSkillFlag" icon="lightbulb-outline" title="lightbulb" class="green" id=[[index]]></paper-icon-button>
+          </div>
+
+          </div>
+
+          <div class="card-actions">
+            <div class="horizontal justified">
+              <!-- currently reviewing / max numbers of reviews-->
+              <!--if reviewing / max numbers = 1, disable "AssignPaper"-Button-->
+            <span >[[item.reviewing.length]] / [[item.maxReviews]]</span>
+            <!--Button: Assign reviewer a new paper to review , leads to another page-->
+            <template is="dom-if" if="[[freeReviews(item)]]">
+                <a href="#/review-request" style="text-decoration: none;" >
+                  <paper-button class="card-reserve">Assign Paper</paper-button>
+                </a>
+              </template>
+              <template is="dom-if" if="[[!freeReviews(item)]]">
+                <paper-button class="card-reserve2">Assign Paper</paper-button>
+                </template>
+
+            </div>
+          </div>
+
+        </paper-card>
+
+    </custom-style>
+  </template>
+
+  </custom-style>
     </div>
 
   </template>
 
   <script>
-    class ReviewerOverview extends Polymer.Element {
+    class ReviewerOverview extends Polymer.GestureEventListeners(Polymer.Element){
       static get is() {
         return 'reviewer-overview';
       }
-
-      static get properties() {
-        return {
-          reviewers: {
-            type: Array,
-            value: ()=> {
-              return [
-                {
-                  name: 'Andreas Butz',
-                  email: 'butz@ifi.lmu.de'
-                },
-                {
-                  name: 'Heinrich Hußmann',
-                  email: 'hußmann@ifi.lmu.de'
-                },
-              ]
-            }
+      static get properties(){
+        return { reviewers:{
+          notify: true
+        }
+      };
+    }
+      constructor(){
+        super();
+        this.reviewers=[
+          {name:"Peer",
+          surname:"Kroeger",
+          title:"Professor",
+          organisation:"LMU Munich",
+          showSkills:true,
+          skills:[{name:"Data Mining",
+                    rating: 3 },
+                  {name:"BioInformatics",
+                    rating: 2}],
+          achievements:[],
+          reviewing:[{},{}],
+          maxReviews:3
+      },
+      {name:"Arthur",
+      surname:"Zimek",
+      title:"Professor",
+      showSkills:true,
+      organisation:"LMU Munich",
+      skills:[{name:"Data Mining",
+                rating: 4 },
+              {name:"BioInformatics",
+                rating: 1}],
+      achievements:[],
+      reviewing:[{},{},{},{},{},{}],
+      maxReviews:6
+    }];
+      }
+//Function creates as much sized array as there are stars for review.
+//Usuaally  5.
+// Empty stars are array indices with false as value.
+//Full stars are array indices filled with true as value.
+      createArray(n) {
+        var array= new Array(5);
+        for(var i=0; i<5;i++){
+          if(i<n){
+            array[i]=true;
+          }else{
+            array[i]=false;
           }
         }
+        return array;
       }
+//Function tests if reviewer is reviewing
+//maximum papers he is able to handle at a time.
+//return false= cannot handle additional assigned papers
+//return true= can accept more papers to review
+  freeReviews(reviewer){
+    return (reviewer.reviewing.length<reviewer.maxReviews);
+
+  }
+  //Switches boolean flag "showSkills"  to show if user wants to see
+  //skillset of reviewer or their achievements
+  switchSkillFlag(event)
+  {
+    var id = event.target.id;
+    var object= this.reviewers[id];
+    object.showSkills=!object.showSkills;
+
+   console.log("Switched showSkills to " + object.showSkills);
+   console.log(this.reviewers);
+  }
+
     }
 
     window.customElements.define((ReviewerOverview).is, ReviewerOverview);
