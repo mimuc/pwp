@@ -13,7 +13,6 @@
       :host {
         display: block;
         padding: 10px;
-
       }
 
       paper-button {
@@ -172,71 +171,125 @@
     <div class="card">
       <div class="space-left"></div>
       <section class="form-section space-left">
+
         <h2 class="center">Create your account</h2>
+
         <p class="sub-title">
           Organize your papers, reviews and conferences
         </p>
 
-        Sign up with email or use social login (Facebook, Google, Twitter, Github) <br>
+        <p class="hint">
+          Sign up with email or use social login (Facebook, Google, Twitter, Github)
+        </p>
 
         <paper-radio-group selected="{{loginType}}">
-          <paper-radio-button name="email" on-tap="_changeSignUpView" data-param="email">Email</paper-radio-button>
-          <paper-radio-button name="social" on-tap="_changeSignUpView" data-param="social">Social</paper-radio-button>
+
+          <paper-radio-button
+            name="email"
+            on-tap="_changeSignUpView"
+            data-param="email">
+            Email
+          </paper-radio-button>
+
+          <paper-radio-button
+            name="social"
+            on-tap="_changeSignUpView"
+            data-param="social">
+            Social
+          </paper-radio-button>
+
         </paper-radio-group>
 
 
-        <iron-form id="signUpForm" on-iron-form-response="_handleResponse">
-
-          <form hidden$="{{!isSignupEmail}}" method="post" action="http://httpbin.org/post">
-            <paper-input label="First Name" auto-validate required error-message="Please enter your first name"></paper-input>
-            <paper-input label="Last Name" auto-validate required error-message="Please enter your last name"></paper-input>
-            <paper-input label="Email" auto-validate required error-message="Please enter your email in correct format, e.g. me@example.com"></paper-input>
-            <!--TODO: add dropbox password feedback bars-->
-            <paper-input label="Password" auto-validate required error-message="Please enter your password" type="password"></paper-input>
-
-            <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
-
-            <div class="row">
-              <paper-button raised class="green right" on-tap="_submit">Confirm</paper-button>
-            </div>
-
-          </form>
-
-          <form hidden$="{{isSignupEmail}}" method="get" action="/form/handler">
-
-            <div class="btn-social btn-facebook">
-              <a href="#">
-                <span></span>
-                <label>Continue with Facebook</label>
-              </a>
-            </div>
-
-            <div class="btn-social btn-google">
-              <a href="#">
-                <span></span>
-                <label>Continue with Google</label>
-              </a>
-            </div>
-
-            <div class="btn-social btn-twitter">
-              <a href="#">
-                <span></span>
-                <label>Continue with Twitter</label>
-              </a>
-            </div>
-
-            <div class="btn-social btn-github">
-              <a href="#">
-                <span></span>
-                <label>Continue with Github</label>
-              </a>
-            </div>
-
-          </form>
+        <section class="signup-email">
+          <iron-form id="signUpForm" on-iron-form-response="_handleResponse">
+            <form hidden$="{{!isSignupEmail}}" method="get" action="http://httpbin.org/get">
 
 
-        </iron-form>
+              <paper-input
+                label="First Name"
+                value="{{ firstName }}"
+                name="firstName"
+                pattern="[a-zA-z]+"
+                required
+                auto-validate
+                error-message="Please enter your first name">
+              </paper-input>
 
+              <paper-input
+                label="Last Name"
+                value="{{ lastName}}"
+                name="lastName"
+                pattern="[a-zA-z]+"
+                required
+                auto-validate
+                error-message="Please enter your last name">
+              </paper-input>
+
+              <paper-input
+                label="Email"
+                value="{{ email}}"
+                name="email"
+                pattern='^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+                required
+                auto-validate
+                error-message="Please enter your email in correct format, e.g. me@example.com">
+              </paper-input>
+
+              <!--TODO: add dropbox password feedback bars-->
+              <paper-input
+                type="password"
+                label="Password"
+                value="{{ password}}"
+                name="password"
+                required
+                auto-validate
+                error-message="Please enter your password">
+              </paper-input>
+
+              <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
+
+              <div class="row">
+                <paper-button raised class="green right" on-tap="_submit">Confirm</paper-button>
+              </div>
+
+            </form>
+          </iron-form>
+        </section>
+
+
+
+        <section class="signup-social" hidden$="{{isSignupEmail}}">
+
+          <div class="btn-social btn-facebook">
+            <a href="#">
+              <span></span>
+              <label>Continue with Facebook</label>
+            </a>
+          </div>
+
+          <div class="btn-social btn-google">
+            <a href="#">
+              <span></span>
+              <label>Continue with Google</label>
+            </a>
+          </div>
+
+          <div class="btn-social btn-twitter">
+            <a href="#">
+              <span></span>
+              <label>Continue with Twitter</label>
+            </a>
+          </div>
+
+          <div class="btn-social btn-github">
+            <a href="#">
+              <span></span>
+              <label>Continue with Github</label>
+            </a>
+          </div>
+
+        </section>
 
         <div class="row">
           <p class="hint">Already have an account? <a href="#/log-in">Log in</a></p>
@@ -283,7 +336,7 @@
       }
 
       _handleResponse(e) {
-        console.log('form response', JSON.stringify(e.detail.response));
+        console.log('form response', e.detail.response);
       }
     }
 
