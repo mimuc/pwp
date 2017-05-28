@@ -179,13 +179,24 @@
         margin-top: 10px;
       }
 
-      paper-progress.blue {
-        --paper-progress-active-color: var(--paper-light-blue-500);
-        --paper-progress-secondary-color: var(--paper-light-blue-100);
-      }
       paper-progress.red {
         --paper-progress-active-color: var(--paper-red-500);
-        --paper-progress-secondary-color: var(--paper-red-100);
+      }
+
+      paper-progress.orange {
+        --paper-progress-active-color: var(--paper-orange-500);
+      }
+
+      paper-progress.yellow {
+        --paper-progress-active-color: var(--paper-yellow-500);
+      }
+
+      paper-progress.lime {
+        --paper-progress-active-color: var(--paper-light-green-a400);
+      }
+
+      paper-progress.green {
+        --paper-progress-active-color: var(--paper-light-green-a700);
       }
 
       .signup-social {
@@ -277,7 +288,8 @@
               <span class="hint" hidden$="{{ hidePasswordFeedbackBars }}">Strength: </span>
               <paper-progress
                 hidden$="{{ hidePasswordFeedbackBars }}"
-                value="{{ passwordScore }}">
+                value="{{ passwordScore }}"
+                class$="{{ color }}">
               </paper-progress>
 
               <div class="password-hint">{{ passwordFeedback }}</div>
@@ -381,11 +393,11 @@
         this.passwordFeedback = analysis.feedback.warning;
 
         switch (analysis.score) {
-          case 0: this.passwordScore = 20; break;
-          case 1: this.passwordScore = 40; break;
-          case 2: this.passwordScore = 60; break;
-          case 3: this.passwordScore = 80; break;
-          case 4: this.passwordScore = 100; break;
+          case 0: this.passwordScore = 20; this.color = 'red'; break;
+          case 1: this.passwordScore = 40; this.color = 'orange'; break;
+          case 2: this.passwordScore = 60; this.color = 'yellow'; break;
+          case 3: this.passwordScore = 80; this.color = 'lime'; break;
+          case 4: this.passwordScore = 100; this.color = 'green'; break;
           default: this.passwordScore = 0; break;
         }
       }
