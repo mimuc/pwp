@@ -6,14 +6,141 @@
     <style include="shared-styles">
       :host {
         display: block;
-        padding: 10px;
+      }
+      header {
+        @apply --layout-vertical;
+        @apply --layout-center-center;
+        height: calc(75vh - 64px);
+        padding: 0 16px;
+        background-image: url('/images/pages/teaser-main.png');
+        backgrond-repeat: no-repeat;
+        background-size: cover;
+        color: white;
+        text-align: center;
+      }
+      header > h2 {
+        font-size: 56px;
+        font-weight: 300;
+        margin: 0;
+      }
+      header > p {
+        font-size: 32px;
+      }
+      section {
+        padding: 88px 16px;
+      }
+      section.odd {
+        background-color: #ffffff;
+      }
+      .teaser {
+        @apply --layout-vertical;
+        @apply --layout-center-center;
+        font-size: 20px;
+      }
+      .container {
+        @apply --layout-horizontal;
+        max-width: 1200px;
+        max-height: 400px;
+        margin: 0 auto;
+      }
+      .container > * {
+        @apply --layout-flex;
+        padding-right: 32px;
+      }
+      .container img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .container h3 {
+        font-size: 32px;
+        font-weight: 300;
+        margin: 24px 0;
+      }
+      .container p {
+        line-height: 1.5;
+      }
+      footer {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+        height: 64px;
+        width: 100%;
+        opacity: 0.7;
+      }
+      footer > * {
+        padding: 0 16px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          @apply --layout-vertical;
+        }
       }
 
     </style>
-    <div class="card">
-      <h1>Home</h1>
-      <p>This is the landing page</p>
-    </div>
+
+      <header>
+        <h2>Introducing SUMASY</h2>
+        <p>The simple conference system.</p>
+      </header>
+
+      <section class="odd">
+        <p class="teaser">
+          SUMASY is a conference management system that is flexible, easy to use, and has many features to make it suitable for various conference models.
+        </p>
+      </section>
+
+      <section>
+        <div class="container">
+          <div>
+            <h3>Administration</h3>
+            <p>Management and monitoring of the program committee.</p>
+            <p><a href="#">Learn more</a></p>
+          </div>
+          <div>
+            <img src="/images/pages/placeholder.png">
+          </div>
+        </div>
+      </section>
+
+      <section class="odd">
+        <div class="container">
+          <div>
+            <img src="/images/pages/placeholder.png">
+          </div>
+          <div>
+            <h3>Paper Submission</h3>
+            <p>Automatic paper submission and assignment based on the preferences of PC members.</p>
+            <p><a href="#">Learn more</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div>
+            <h3>Reviews</h3>
+            <p>Flexibel and simple review process.</p>
+            <p><a href="#">Learn more</a></p>
+          </div>
+          <div>
+            <img src="/images/pages/placeholder.png">
+          </div>
+        </div>
+      </section>
+
+      <hr/>
+
+      <footer>
+        <div>
+          SUMASY LOGO
+        </div>
+        <div>
+          <a href="#">Privacy Policy</a>
+        </div>
+        <div>
+          <a href="#">Terms</a>
+        </div>
+      </footer>
+
   </template>
 
   <script>
