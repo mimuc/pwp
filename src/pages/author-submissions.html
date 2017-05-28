@@ -1,4 +1,17 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-column.html">
+<link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-sorter.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="author-submissions">
@@ -9,24 +22,269 @@
 
         padding: 10px;
       }
+
+      vaadin-grid#material {
+        font-family: Roboto, sans-serif;
+        border: none;
+        height: auto;
+        --divider-color: rgba(0, 0, 0, var(--dark-divider-opacity));
+
+        --vaadin-grid-cell: {
+          padding: 0;
+        };
+
+        --vaadin-grid-header-cell: {
+          height: 64px;
+          color: rgba(0, 0, 0, var(--dark-secondary-opacity));
+          font-size: 12px;
+        };
+
+        --vaadin-grid-body-cell: {
+          height: 48px;
+          color: rgba(0, 0, 0, var(--dark-primary-opacity));
+          font-size: 13px;
+        };
+
+        --vaadin-grid-body-row-hover-cell: {
+          background-color: var(--paper-grey-200);
+        };
+
+        --vaadin-grid-body-row-selected-cell: {
+          background-color: var(--paper-grey-100);
+        };
+
+        --vaadin-grid-focused-cell: {
+          box-shadow: none;
+          font-weight: bold;
+        };
+      }
+
+      vaadin-grid#material .cell {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 56px;
+      }
+
+      vaadin-grid#material .cell.last {
+        padding-right: 24px;
+      }
+
+      vaadin-grid#material .cell.numeric {
+        text-align: right;
+      }
+
+      vaadin-grid#material paper-checkbox {
+        --primary-color: var(--paper-indigo-500);
+        margin: 0 24px;
+      }
+
+      vaadin-grid#material vaadin-grid-sorter {
+        --vaadin-grid-sorter-arrow: {
+          display: none !important;
+        };
+      }
+
+      vaadin-grid#material vaadin-grid-sorter .cell {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      vaadin-grid#material vaadin-grid-sorter iron-icon {
+        transform: scale(0.8);
+      }
+
+      vaadin-grid#material vaadin-grid-sorter:not([direction]) iron-icon {
+        color: rgba(0, 0, 0, var(--dark-disabled-opacity));
+      }
+
+      vaadin-grid#material vaadin-grid-sorter[direction] {
+        color: rgba(0, 0, 0, var(--dark-primary-opacity));
+      }
+
+      vaadin-grid#material vaadin-grid-sorter[direction=desc] iron-icon {
+        transform: scale(0.8) rotate(180deg);
+      }
+
+      paper-card {
+      	width: 100%;
+      }
+
+      .first-column {
+      	padding-left: 20px;
+      }
+
+      .submission-accepted {
+      	color: var(--paper-green-500);
+      }
+
+      .submission-rejected {
+      	color: var(--paper-red-500);
+      }
+
+      .submission-conditionally-accepted {
+      	color: var(--paper-orange-500);
+      }
+
+      .submission-under-review {
+      	color: var(--paper-blue-500);
+      }
     </style>
 
-    <div class="card">
-      <h2>Submission Overview</h2>
-      <p>TODO use property that has all the <strong>author's submissions</strong>. </p>
-      <div>
-        <h4>Example</h4>
-        <ul>
-          <li><a href="#/submission-details">Submission 1</a></li>
-        </ul>
-      </div>
-    </div>
+    <paper-card heading="My Submissions">
+    	<div style="position: absolute; top: 16px; right: 16px;">
+    		<paper-icon-button icon="sumasy-icons:filter-list" title="Filter" on-tap="_openFilter"></paper-icon-button>
+    	</div>
+
+    	<vaadin-grid id="material" items="[[submissions]]">
+    		<vaadin-grid-column>
+				  <template class="header">
+				    <vaadin-grid-sorter path="title">
+				      <div class="cell first-column">
+				        <span>Title</span><iron-icon icon="sumasy-icons:arrow-upward"></iron-icon>
+				      </div> 
+				    </vaadin-grid-sorter>
+				  </template>
+				  <template>
+				    <div class="cell first-column"><a href="#/submission-details">[[item.title]]</a></div>
+				  </template>
+				</vaadin-grid-column>
+				<vaadin-grid-column>
+				  <template class="header">
+				    <vaadin-grid-sorter path="date">
+				      <div class="cell">
+				        <span>Date</span><iron-icon icon="sumasy-icons:arrow-upward"></iron-icon>
+				      </div> 
+				    </vaadin-grid-sorter>
+				  </template>
+				  <template>
+				    <div class="cell">[[_formatDate(item.date)]]</div>
+				  </template>
+				</vaadin-grid-column>
+				<vaadin-grid-column>
+				  <template class="header">
+				    <vaadin-grid-sorter path="type">
+				      <div class="cell">
+				        <span>Submission Type</span><iron-icon icon="sumasy-icons:arrow-upward"></iron-icon>
+				      </div> 
+				    </vaadin-grid-sorter>
+				  </template>
+				  <template>
+				    <div class="cell">[[item.type]]</div>
+				  </template>
+				</vaadin-grid-column>
+				<vaadin-grid-column>
+				  <template class="header">
+				    <vaadin-grid-sorter path="conference">
+				      <div class="cell">
+				        <span>Conference</span><iron-icon icon="sumasy-icons:arrow-upward"></iron-icon>
+				      </div> 
+				    </vaadin-grid-sorter>
+				  </template>
+				  <template>
+				    <div class="cell">[[item.conference]]</div>
+				  </template>
+				</vaadin-grid-column>
+				<vaadin-grid-column>
+				  <template class="header">
+				    <vaadin-grid-sorter path="deadline">
+				      <div class="cell">
+				        <span>Deadline</span><iron-icon icon="sumasy-icons:arrow-upward"></iron-icon>
+				      </div> 
+				    </vaadin-grid-sorter>
+				  </template>
+				  <template>
+				    <div class="cell">[[_formatDate(item.deadline)]]</div>
+				  </template>
+				</vaadin-grid-column>
+				<vaadin-grid-column>
+				  <template class="header">
+				    <vaadin-grid-sorter path="status">
+				      <div class="cell">
+				        <span>Status</span><iron-icon icon="sumasy-icons:arrow-upward"></iron-icon>
+				      </div> 
+				    </vaadin-grid-sorter>
+				  </template>
+				  <template>
+				    <div class$="cell [[_statusToClass(item.status)]]">[[item.status]]</div>
+				  </template>
+				</vaadin-grid-column>
+			</vaadin-grid>
+    </paper-card>
+
+    <paper-dialog id="filterDialog">
+		  <h2>Filter</h2>
+		  <paper-dropdown-menu label="Conference">
+				<paper-listbox slot="dropdown-content" class="dropdown-content">
+					<template is="dom-repeat" items="[[conferences]]">
+						<paper-item>[[item]]</paper-item>
+					</template>
+				</paper-listbox>
+			</paper-dropdown-menu><br>
+			<paper-dropdown-menu label="Status">
+				<paper-listbox slot="dropdown-content" class="dropdown-content">
+					<template is="dom-repeat" items="[[states]]">
+						<paper-item>[[item]]</paper-item>
+					</template>
+				</paper-listbox>
+			</paper-dropdown-menu><br>			
+		  <div class="buttons">
+		  	<paper-button on-tap="_applyFilter">Apply</paper-button>
+		  </div>
+		</paper-dialog>
+
   </template>
 
   <script>
     class AuthorSubmissions extends Polymer.Element {
-      static get is() {
-        return 'author-submissions';
+      static get is() { return 'author-submissions'; }
+
+      static get properties() {
+      	return {
+      		submissions: { type: Array },
+      		conferences: { type: Array },
+      		states: { type: Array }
+      	};
+      }
+
+      constructor() {
+      	super();
+
+      	this.submissions = [
+			    { title: "Another failure", date: new Date(2017, 18, 5), type: "Academic Research Papers", conference: "CHI 2017.3", deadline: new Date(2017, 5, 19), status: "rejected" },
+			    { title: "And the next one", date: new Date(2017, 5, 15), type: "PhD Research Colloquium", conference: "CHI 2018.2", deadline: new Date(2017, 6, 15), status: "under review" },
+			    { title: "We have a winner here!", date: new Date(2017, 5, 13), type: "Case Study Submissions", conference: "CHI 2018", deadline: new Date(2017, 5, 30), status: "accepted" },
+			    { title: "I feel like this paper is a good one!", date: new Date(2017, 5, 11), type: "Non-Academic Contributions", conference: "CHI 2017.2", deadline: new Date(2017, 5, 15), status: "conditionally accepted" },
+			    { title: "Let's try again", date: new Date(2017, 5, 10), type: "Academic Research Papers", conference: "CHI 2017", deadline: new Date(2017, 5, 28), status: "under review" },
+			    { title: "Not acceptable!", date: new Date(2017, 5, 5), type: "Academic Research Papers", conference: "CHI 2017", deadline: new Date(2017, 5, 28), status: "rejected" }
+				];
+
+				this.conferences = ["CHI 2017.3", "CHI 2018.2", "CHI 2018", "CHI 2017.2", "CHI 2017"];
+
+				this.states = ["Accepted", "Under Review", "Conditionally Accepted", "Rejected"];
+      }
+
+      _formatDate(date) {
+      	return !date || date.toISOString().slice(0, 10);
+      }
+
+      _statusToClass(status) {
+      	switch (status) {
+      		case "accepted": return "submission-accepted";
+      		case "rejected": return "submission-rejected";
+      		case "under review": return "submission-under-review";
+      		case "conditionally accepted": return "submission-conditionally-accepted";
+      		default: return "#000000";
+      	}
+      }
+
+      _openFilter() {
+      	this.$.filterDialog.open();
+      }
+
+      _applyFilter() {
+      	this.$.filterDialog.close();
       }
     }
 
