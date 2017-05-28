@@ -22,7 +22,7 @@
     "src/pages/submission-details.html",
     "src/pages/submission-overview.html",
     "src/pages/sumasy-page404.html",
-    "src/pages/volunteer-central"
+    "src/pages/volunteer-central.html"
   ],
   "sources": [
     "src/**/*",

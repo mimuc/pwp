@@ -7,6 +7,9 @@
   "dependencies": {
     "app-layout": "PolymerElements/app-layout",
     "app-route": "PolymerElements/app-route",
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^2.0.0",
+    "iron-collapse": "PolymerElements/iron-collapse#^2.0.0",
+    "iron-collapse-button": "jifalops/iron-collapse-button#^1.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout",
     "iron-form": "PolymerElements/iron-form#2.0-preview",
     "iron-icon": "PolymerElements/iron-icon",
@@ -28,6 +31,7 @@
     "paper-item": "PolymerElements/paper-item#^2.0.0",
     "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
     "paper-progress": "PolymerElements/paper-progress#^2.0.0",
+    "paper-radio-button": "PolymerElements/paper-radio-button#^2.0.0"
     "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
     "zxcvbn": "^4.4.2",
     "vaadin-grid": "3.0.0-alpha1",
