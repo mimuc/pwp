@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 
 <link rel="import" href="../shared-styles.html">
 
@@ -166,6 +167,31 @@
         background-size: 30px 30px;
       }
 
+      .password-hint {
+        color: red;
+        font-size: 80%;
+      }
+
+      paper-progress {
+        display: block;
+        width: 75%;
+        float: right;
+        margin-top: 10px;
+      }
+
+      paper-progress.blue {
+        --paper-progress-active-color: var(--paper-light-blue-500);
+        --paper-progress-secondary-color: var(--paper-light-blue-100);
+      }
+      paper-progress.red {
+        --paper-progress-active-color: var(--paper-red-500);
+        --paper-progress-secondary-color: var(--paper-red-100);
+      }
+
+      .signup-social {
+        margin-top: 20px;
+      }
+
     </style>
 
     <div class="card">
@@ -205,7 +231,6 @@
           <iron-form id="signUpForm" on-iron-form-response="_handleResponse">
             <form hidden$="{{!isSignupEmail}}" method="get" action="http://httpbin.org/get">
 
-
               <paper-input
                 label="First Name"
                 value="{{ firstName }}"
@@ -213,7 +238,7 @@
                 pattern="[a-zA-z]+"
                 required
                 auto-validate
-                error-message="Please enter your first name">
+                error-message="Please enter your first name correctly">
               </paper-input>
 
               <paper-input
@@ -223,7 +248,7 @@
                 pattern="[a-zA-z]+"
                 required
                 auto-validate
-                error-message="Please enter your last name">
+                error-message="Please enter your last name correctly">
               </paper-input>
 
               <paper-input
@@ -238,14 +263,25 @@
 
               <!--TODO: add dropbox password feedback bars-->
               <paper-input
+                id="password"
                 type="password"
                 label="Password"
                 value="{{ password}}"
                 name="password"
                 required
                 auto-validate
+                on-keyup="_checkPasswordStrength"
                 error-message="Please enter your password">
               </paper-input>
+
+              <span class="hint" hidden$="{{ hidePasswordFeedbackBars }}">Strength: </span>
+              <paper-progress
+                hidden$="{{ hidePasswordFeedbackBars }}"
+                value="{{ passwordScore }}">
+              </paper-progress>
+
+              <div class="password-hint">{{ passwordFeedback }}</div>
+
 
               <p class="hint">by creating an account you agree to our <a href="#">privacy policy</a> and <a href="#">terms of service</a></p>
 
@@ -256,8 +292,6 @@
             </form>
           </iron-form>
         </section>
-
-
 
         <section class="signup-social" hidden$="{{isSignupEmail}}">
 
@@ -302,6 +336,7 @@
 
   </template>
 
+  <script src="../../bower_components/zxcvbn/dist/zxcvbn.js"></script>
   <script>
     class SignUp extends Polymer.Element {
       static get is() {
@@ -319,6 +354,10 @@
             type: Boolean,
             value: true,
           },
+          hidePasswordFeedbackBars: {
+            type: Boolean,
+            value: true,
+          },
         };
       }
 
@@ -328,6 +367,26 @@
           this.isSignupEmail = true;
         } else {
           this.isSignupEmail = false;
+        }
+      }
+
+      _checkPasswordStrength() {
+        var userInputPassword = this.$.password.value;
+        if(userInputPassword.length > 0) {
+          this.hidePasswordFeedbackBars = false;
+        } else {
+          this.hidePasswordFeedbackBars = true;
+        }
+        var analysis = zxcvbn(userInputPassword);
+        this.passwordFeedback = analysis.feedback.warning;
+
+        switch (analysis.score) {
+          case 0: this.passwordScore = 20; break;
+          case 1: this.passwordScore = 40; break;
+          case 2: this.passwordScore = 60; break;
+          case 3: this.passwordScore = 80; break;
+          case 4: this.passwordScore = 100; break;
+          default: this.passwordScore = 0; break;
         }
       }
 
