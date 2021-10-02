@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="review-request">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+    <div class="card">
+      <h2>Review Request</h2>
+      <p>TODO pass reviewer details (contact info), and submission details to this element --> properties</p>
+      <textarea>Dear Reviewer XYZ, would you please write a review for this submission:
+
+        Submission ABC
+
+        Deadline: 01.02.2018
+
+      </textarea>
+    </div>
+  </template>
+
+  <script>
+    class ReviewRequest extends Polymer.Element {
+      static get is() {
+        return 'review-request';
+      }
+    }
+
+    window.customElements.define((ReviewRequest).is, ReviewRequest);
+  </script>
+</dom-module>

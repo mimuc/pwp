@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="reviewer-profile-tab-one">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
+            }
+            .input {
+                max-width: 70%;
+            }
+        </style>
+
+        <h2>General Background</h2>
+        <paper-dropdown-menu label="Your Occupation">
+            <paper-listbox slot="dropdown-content" selected="{{selectedOccupation}}">
+                <dom-repeat items="[[occupations]]" as="occupation">
+                    <template>
+                        <paper-item>[[occupation]]</paper-item>
+                    </template>
+                </dom-repeat>
+            </paper-listbox>
+        </paper-dropdown-menu>
+        <paper-dropdown-menu label="Your Disciplinary Background">
+            <paper-listbox slot="dropdown-content" selected="{{selectedBackground}}">
+                <dom-repeat items="[[backgrounds]]" as="background">
+                    <template>
+                        <paper-item>[[background]]</paper-item>
+                    </template>
+                </dom-repeat>
+            </paper-listbox>
+        </paper-dropdown-menu>
+        <paper-input label="Years in the HCI field (excluding time spent as a student)" slot="prefix" class="input"></paper-input>
+        <paper-input label="Years of post-undergraduate education" slot="prefix" class="input"></paper-input>
+        <paper-input label="Number of products/systems you've designed/developed/studied in depth" slot="prefix" class="input"></paper-input>
+
+    </template>
+
+    <script>
+        class ReviewerProfileTabOne extends Polymer.Element {
+            static get is() {
+                return 'reviewer-profile-tab-one';
+            }
+            constructor() {
+                super();
+                this.occupations = ['Practitioner','Researcher','Student'];
+                this.backgrounds = ['Computer Science','Engineering','Psychology', 'Social Science', 'Design'];
+            }
+            static get properties() {
+                return {
+                    selectedOccupation: {
+                        value: 2
+                    },
+                    selectedBackground: {
+                        value: 0
+                    },
+                    userData: String
+                }
+            }
+        }
+        window.customElements.define((ReviewerProfileTabOne).is, ReviewerProfileTabOne);
+    </script>
+</dom-module>

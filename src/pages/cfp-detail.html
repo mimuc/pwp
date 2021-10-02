@@ -1,0 +1,215 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="cfp-detail">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      .containerdetails{
+          @apply (--layout-horizontal);
+          @apply(--layout-wrap);
+      }
+      .flextable{
+          @apply (--layout-flex-2);
+      }
+
+      .flexdescription{
+          margin-top: 4px;
+          padding-right: 5px;
+          text-align: justify;
+          @apply(--layout-flex);
+
+      }
+
+      table{
+          text-align: left;
+      }
+
+      table#deadlines, tr  {
+          border: 1px solid rgba(88, 88, 88, 0.8);
+          border-collapse: collapse;
+      }
+      th {
+          background-color: rgba(202, 202, 202, 0.5);
+          padding-left: 10px;
+        }
+
+
+      table#details{
+          max-width: 52%;
+      }
+      table#guidelines{
+          max-width:98%;
+      }
+
+      table#deadlines td {
+          padding: 10px;
+      }
+
+
+    </style>
+
+    <div class="card">
+      <h2>CHI 2018</h2>
+      <!-- TODO pass the details from outside -> properties!  other solution: save information in sql database?-->
+        <!--Details section with intro text-->
+        <h3>Details</h3>
+        <div class="containerdetails">
+            <table id="details" class="flextable">
+                <template is="dom-repeat" items="[[ details ]]" as="det">
+                    <tr>
+                        <td>Date </td>
+                        <td>[[ det.date ]]</td>
+                    </tr>
+                    <tr>
+                        <td>Location </td>
+                        <td>[[ det.location ]]</td>
+                    </tr>
+                    <tr>
+                        <td>Language </td>
+                        <td>[[ det.language ]]</td>
+                    </tr>
+                    <tr>
+                        <td>Review Modality </td>
+                        <td>[[ det.modality ]]</td>
+                    </tr>
+                    <tr>
+                        <td>Tags </td>
+                        <td>[[ det.tags ]]</td>
+                    </tr>
+                    <tr>
+                        <td>Website </td>
+                        <td><a href="[[ det.website ]]">[[ det.website ]]</a></td>
+
+                    </tr>
+
+                </template>
+            </table>
+            <p class="flexdescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+
+        </div>
+
+
+        <!--Guidelines section-->
+        <h3>Guidelines</h3>
+        <table id="guidelines">
+            <template is="dom-repeat" items="[[ guidelines ]]" as="guide">
+                <tr>
+                    <td>[[guide.kind]] </td>
+                    <td>[[guide.maximum ]]</td>
+                </tr>
+            </template>
+        </table>
+
+        <!--Topics section-->
+        <h3>Topics</h3>
+        <ul>
+            <li>Topic 1</li>
+            <li>Topic 2</li>
+            <li>Topic 3</li>
+            <li>Topic 4</li>
+        </ul>
+
+        <!--Keydates-->
+        <h3>Dates</h3>
+        <table id="deadlines">
+            <tr>
+                <th>Key Dates</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                            </tr>
+            <template is="dom-repeat" items="[[ deadlines ]]" as="deadlines">
+                <tr>
+                    <td>[[ deadlines.keydates ]]</td>
+                    <td>[[ deadlines.deadline ]]</td>
+                    <td>[[ deadlines.status ]]</td>
+
+                </tr>
+            </template>
+        </table>
+
+            </div>
+  </template>
+
+  <script>
+    class CfpDetail extends Polymer.Element {
+      static get is() {
+        return 'cfp-detail';
+      }
+
+
+        static get properties() {
+            return {
+                details: {
+                    type: Array,
+                    value: () => {
+                    return [
+                        {
+                            date: '2018-04-10',
+                            location: 'Hawaii, USA',
+                            language:'english',
+                            modality:'double blind',
+                            tags:'Computer Science, Big Data',
+                            website:'https://chi2018.acm.org'
+
+                        }
+                    ]
+                }
+            },
+            guidelines: {
+                type: Array,
+                    value: () => {
+                    return [
+                        {
+                            kind: 'Oral & Poster Contribution',
+                            maximum: 'max. Paper length: 8 pages'
+                        },
+                        {
+                            kind: 'High-light Talks',
+                            maximum: 'max. Paper length: 16 pages'
+                        }
+                        ,
+                        {
+                            kind: 'Invited review talks & rapporteur',
+                            maximum: 'max. Paper length: 24 pages'
+
+                        }
+                    ]
+                }
+            },
+            deadlines: {
+                type: Array,
+                    value: () => {
+                    return [
+                        {
+                            keydates: 'Abstract Submission',
+                            deadline: '2017-09-19',
+                            status : 'Nothing submitted yet'
+                        },
+                        {
+                            keydates: 'Acceptance / Rejection Notification',
+                            deadline: '2017-11-11',
+                            status : '-'
+                        },
+                        {
+                            keydates: 'Final Paper',
+                            deadline: '2017-12-09',
+                            status : '-'
+                        }
+                    ]
+                }
+            }
+        }
+        }
+    }
+
+    window.customElements.define((CfpDetail).is, CfpDetail);
+  </script>
+</dom-module>

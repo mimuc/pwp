@@ -1,0 +1,253 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+<link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button-icons.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+
+<dom-module id="submission-decision">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+
+
+
+      div[class$="-card"] {
+        float: left;
+      }
+
+      .acceptancepoint4 {
+        float: right;
+        display: inline-block;
+        color: forestgreen;
+      }
+
+      .acceptancepoint3 {
+        float: right;
+        display: inline-block;
+        color: #ff0003;
+      }
+      .acceptancepoint2 {
+        float: right;
+        display: inline-block;
+        color: #ffb209;
+      }
+      .acceptancepoint1 {
+        float: right;
+        display: inline-block;
+        color: #b61d0a;
+      }
+      paper-button {
+        margin: 1em 1.29em;
+
+      }
+      .sender {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 3em;
+        border-radius: 70%;
+        border-style:  groove  ;
+        vertical-align: middle;
+        margin-top: 3px;
+      }
+
+
+
+
+
+
+
+
+    </style>
+    <a href="#/submission-overview">Back to submissions</a>
+
+    <h1>Submission Decision</h1>
+
+
+    <div class="left-card" style="width: 65%; min-width: 400px;">
+      <h2>Paper Information</h2>
+      <div class="card">
+        <h3>Paper Title:</h3>
+        <h1>[[paper.title]]</h1>
+
+        <h3>Authors</h3>
+          <template is="dom-repeat" items="{{paper.authors}}" as="author" >
+            [[author.name]]
+          </template>
+
+        <h3>Abstract</h3>
+        <p>[[paper.abstract]]</p>
+
+        <paper-button raised>Open Paper</paper-button>
+      </div>
+
+      <h2>Decission</h2>
+
+      <div class="card">
+        <label id="label1">Flag the paper as:</label>
+        <paper-radio-group aria-labelledby="label1">
+          <template is="dom-repeat" items="{{decissionforms}}">
+            <paper-radio-button name="[[item]]">[[item]]</paper-radio-button>
+          </template>
+        </paper-radio-group>
+        <iron-autogrow-textarea style="height: 200px; width: 90%" class="card" placeholder="Type a Comment about your Decision"></iron-autogrow-textarea>
+
+        <paper-button raised>Send Submission Decisssion</paper-button>
+      </div>
+
+
+
+    </div>
+
+    <div class="right-card" style="width: 35%; min-width: 400px;">
+      <h2>Reviews</h2>
+      <div class="card">
+
+        <template is="dom-repeat" items="{{reviews}}">
+          <iron-collapse-button style="width: 100%;" >
+            <div slot="collapse-trigger" style=" width: 100%">
+              <h1 style="text-align: left; display:inline-block;">Review[[item.id]]</h1>
+              <h3 class$="acceptancepoint[[item.acceptancepoint]]">[[item.acceptancetxt]] [[item.acceptancepoint]]</h3>
+
+            </div>
+
+            <div slot="collapse-content" >
+
+              <h2>Summary</h2>
+              <p>[[item.summary]]</p>
+              <paper-button raised>OPEN Review</paper-button>
+
+
+
+              <div class="messages">
+                <table >
+                  <template is="dom-repeat" items="{{item.reviewMessages}}">
+                    <tr>
+                      <td class="sender" >[[item.sender]]</td>
+                      <td style="width: 80%;">[[item.message]]</td>
+                    </tr>
+                  </template>
+
+                </table>
+                <iron-autogrow-textarea id$="comment[[item.id]]" style="height: 100px; width: 90%" class="card" placeholder="Comment to the Reviewer" ></iron-autogrow-textarea>
+                <paper-button on-click="sendComment" raised>COMMENT</paper-button>
+
+              </div>
+
+            </div> <!-- END collapse-content div -->
+          </iron-collapse-button>
+          <hr>
+        </template>
+      </div>
+
+
+
+
+
+
+    </div>
+
+
+  </template>
+
+  <script>
+
+
+    let reviews = [
+        {
+            id: 1,
+            acceptancetxt: 'accepted',
+            acceptancepoint: 4,
+            summary: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+            reviewMessages: [
+                {
+                    sender: 'Reviewer',
+                    message: 'Lorem ipsum dolor sit amet'
+                },
+                {
+                    sender: 'CHAIR',
+                    message: 'consetetur sadipscing elitr'
+                }
+            ]
+        },
+        {
+            id: 2,
+            acceptancetxt: 'rejected (with major revisions)',
+            acceptancepoint: 1,
+            summary: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+            reviewMessages: []
+        }
+    ];
+
+    let reviewingPaper = {
+        title: 'Science: what is that?',
+        authors: [
+              {
+                name: 'Author 1'
+              },
+              {
+                name: 'Author 2'
+              }
+        ],
+        abstract: 'A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet I feel that I never was a greater artist than now. When, while the lovely valley teems with'
+    };
+
+    let decissionForms = ['accepted', 'rejected', 'rejected (with minor revisions)', 'rejected (with major revisions)'];
+
+
+    class SubmissionDecision extends Polymer.Element {
+      static get is() {
+        return 'submission-decision';
+      }
+      static get properties() {
+          return {
+              reviews: {
+                  type: Array,
+                  value() {
+                      return reviews;
+                  }
+              },
+              paper: {
+                  type: Object,
+                  value() {
+                      return reviewingPaper;
+                  }
+              },
+              decissionforms: {
+                  type: Array,
+                  value() {
+                      return decissionForms;
+                  }
+              }
+          }
+      }
+
+      sendComment(e) {
+          var item = e.model.item;
+          var id = item.id;
+          var commentid = 'comment' + id;
+          var comment = this.shadowRoot.querySelector('#' + commentid).value;
+
+
+          var result = reviews.filter(function(v) {
+              return v.id === id; // Filter out the appropriate one
+          })[0].reviewMessages; // Get result and access the reviewMessages property
+          result.push({ sender: 'CHAIR', message: comment});
+          this.reviews = reviews;
+
+
+      }
+    }
+
+
+    window.customElements.define((SubmissionDecision).is, SubmissionDecision);
+  </script>
+</dom-module>

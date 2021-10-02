@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../pages/reviewer-profile-tab-one.html">
+<link rel="import" href="../pages/reviewer-profile-tab-two.html">
+<link rel="import" href="../pages/reviewer-profile-tab-three.html">
+
+<dom-module id="reviewer-profile">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+      paper-button.green {
+        background-color: var(--paper-green-500);
+        color: white;
+      }
+    </style>
+
+    <div class="card">
+      <h2>Reviewer Profile</h2>
+      <p>This is your reviewer profile. If not happened yet, please provide the information within all tabs and press save. You can adjust your data at any given time. Once you´ve saved your data, it will wait here like a stone.</p>
+      <paper-tabs selected="{{selected}}" scrollable>
+        <paper-tab name="page-1">About You</paper-tab>
+        <paper-tab name="page-2">Publications & Reviews</paper-tab>
+        <paper-tab name="page-3">Expertise</paper-tab>
+      </paper-tabs>
+      <iron-pages selected="{{selected}}">
+        <div page-name="page-1" class="card">
+            <reviewer-profile-tab-one></reviewer-profile-tab-one>
+        </div>
+        <div page-name="page-2" class="card">
+            <reviewer-profile-tab-two></reviewer-profile-tab-two>
+        </div>
+        <div page-name="page-3" class="card">
+            <reviewer-profile-tab-three></reviewer-profile-tab-three>
+        </div>
+      </iron-pages>
+      <paper-button raised class="green">Save</paper-button>
+
+      <div>
+        Other Roles:
+        <ul>
+          <li><a href="#/author-profile">Author</a></li>
+        </ul>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    class ReviewerProfile extends Polymer.Element {
+      static get is() {
+        return 'reviewer-profile';
+      }
+
+      static get properties() {
+        return {
+            selected: {
+                value: 0
+            }
+        }
+      }
+    }
+    window.customElements.define((ReviewerProfile).is, ReviewerProfile);
+  </script>
+</dom-module>

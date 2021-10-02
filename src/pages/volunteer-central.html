@@ -1,0 +1,395 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../sumasy-icons.html">
+
+<dom-module id="volunteer-central">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      paper-card {
+        margin: 8px;
+        padding: 0;
+      }
+
+
+      h3 {
+        line-height: 0;
+        padding: 0; 
+        margin-top: 16px;
+        font-family: 'Roboto Black';
+      }
+
+      h4 {
+        line-height: 0;
+        margin: 8px 0 8px 0;
+        color: gray;
+        font-family: 'Roboto Black';
+      }
+
+      iron-image {
+        margin-right: 16px;
+      }
+
+      .profile {
+      }
+
+      .card-header {
+        padding: 5px;
+        border-bottom: solid 1px #ddd;
+        background: #ddd;
+      }
+
+      th {
+        border-bottom: solid 1px #ddd;
+        text-align: left;
+      }
+
+      .container {
+        @apply --layout-horizontal;
+        @apply --layout-wrap;
+      }
+
+      .column {
+        @apply --layout-vertical;
+      }
+
+    </style>
+    
+    <!-- Iron Flex Import to control the layout -->
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+
+    <!-- media querys for three different sizes, needs to be made more precise -->
+    <iron-media-query query="(min-width: 1800px)" query-matches="{{ large }}"></iron-media-query>
+    <iron-media-query query="(min-width: 1600px)" query-matches="{{ medium }}"></iron-media-query>
+    <iron-media-query query="(max-width: 1600px)" query-matches="{{ small }}"></iron-media-query>
+
+    <!-- container box with three columns -->
+      <div class="container">
+        
+        <!-- Column #1 contains Profile, Agreement and Conference Selection. Is flexible but with maxium width so it is displayed correctly on phones -->
+        <div class="column flex" style="max-width: 400px;">
+          
+          <!-- Profile Card -->
+          <paper-card class="profile">
+            <div class="horizontal layout end-justified">
+              <paper-icon-button icon="sumasy-icons:info"></paper-icon-button>
+            </div>
+            <div class="card-content vertical layout center">
+                <iron-image style="width:80px; height:80px; border-radius:50%;" 
+                sizing="cover" preload
+                src="../../images/pages/volunteer-central/avatar.png"></iron-image>
+                <h3>[[ user.firstName ]] [[ user.lastName ]]</h3>
+                <h4>[[ user.organisation ]]</h4>
+            </div>
+            <div class="card-actions">
+              <div class="vertical layout justified">
+                  <paper-input always-float-label label="Email" value="{{ user.email }}">
+                  </paper-input>
+                  <div style="margin-top: 8px;"  class="horizontal layout justified center">
+                    <h3>Research Fields</h3>
+                    <paper-icon-button icon="sumasy-icons:create"></paper-icon-button>
+                  </div>
+                <div style="border: solid 1px #eee; margin-bottom: 50px;" class="vertical layout">
+                  <template is="dom-repeat" items="[[ user.interests ]]">
+                    <div class="horizontal layout justified center" style="padding: 8px; border-bottom: solid 1px #eee;"> 
+                      <span style="font-family: Roboto Black; margin-right: 8px;">[[ item.field ]]</span> 
+                      <paper-progress value="[[ item.value ]]"></paper-progress>
+                    </div>
+                  </template>
+                </div>
+              </div>
+              <!-- Here could be more things to ask the reviewer. Needs to be discussed further. -->
+            </div>
+          </paper-card>
+
+          <!-- Volunteer Agreement. Needs to be linked to a page with the legal explanations. Should vanish if confirmed once -->
+          <paper-card>
+            <div class="card-content">
+              <h3>Volunteer Agreement</h3>
+              <p>
+                Before you can review papers on sumasy you need to read and confirm the Independent Reviewer Agreement.
+              </p>
+              <paper-button>Read</paper-button>
+            </div>
+          </paper-card>
+
+          <!-- The whole Dashboard should be filtered by the selected conference -->
+          <paper-card>
+            <div class="card-content">
+              <h3>Conference Selection</h3>
+              <iron-selector 
+                      selected="[[ selectedConference ]]"
+                      attr-for-selected="name">
+                  <template is="dom-repeat" items="[[ conferences ]]">
+                    <div name="[[ item ]]">[[ item ]]</div>
+                  </template>
+              </iron-selector>
+            </div>
+          </paper-card>
+        </div>
+
+         <div class="column flex">
+          <paper-card>
+            <div class="card-header layout horizontal justified center">
+              <span style="margin-left: 16px; font-family:Roboto Black;">Papers to review</span>
+              <paper-icon-button style="color: white;" icon="sumasy-icons:info"></paper-icon-button>
+            </div>
+            <div class="card-content">
+              <template is="dom-if" if="{{ medium }}">
+                <table>
+                  <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Paper</th>
+                    <th>Authors</th>
+                    <th>Research Field</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <template is="dom-repeat" items="[[ reviews ]]">
+                    <tr>
+                      <td>[[ item.status ]]</td>
+                      <td>[[ item.title ]]</td>
+                      <td>[[ item.authors ]]</td>
+                      <td>[[ item.field ]]</td>
+                      <td>[[ item.deadline ]]</td>
+                      <td>
+                        <paper-icon-button icon="sumasy-icons:create"></paper-icon-button>
+                      </td>
+                    </tr>
+                  </template>
+                  </table>
+                  </template>
+                  <template is="dom-if" if="{{ small }}">
+                    <table>
+                      <tbody>
+                      <template is="dom-repeat" items="[[ biddings ]]">
+                        <tr>
+                          <td style="font-family: Roboto Black;">[[ item.title ]]</td>
+                          <td><paper-icon-button icon="sumasy-icons:create"></paper-icon-button></td>
+                        </tr>
+                        <tr>
+                          <td style="font-style: italic;">[[ item.authors ]]</td>
+                        </tr>
+                        <tr>
+                          <td>[[ item.field ]]</td>
+                        </tr>
+                        <tr>
+                          <td>[[ item.deadline ]]</td>
+                          <td>[[ item.status ]]</td>
+                        </tr>
+                      </template>
+                      </tbody>
+                    </table>
+                </template> 
+             </div> 
+          </paper-card>
+
+
+          <paper-card>
+            <div class="card-header layout horizontal justified center">
+              <span style="margin-left: 16px; font-family:Roboto Black;">Paper Bidding</span>
+              <paper-icon-button style="color: white;" icon="sumasy-icons:info"></paper-icon-button>
+            </div>
+            <div class="card-content">
+              <template is="dom-if" if="{{ medium }}">
+                <table>
+                  <thead>
+                  <tr>
+                    <th>Paper</th>
+                    <th>Authors</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <template is="dom-repeat" items="[[ biddings ]]">
+                    <tr>
+                      <td>[[ item.title ]]</td>
+                      <td>[[ item.authors ]]</td>
+                      <td>[[ item.deadline ]]</td>
+                      <td>
+                        <paper-button style="color: blue;">Place Bid</paper-button>
+                      </td>
+                    </tr>
+                  </template>
+                  </tbody>
+                </table>
+              </template>
+              <template is="dom-if" if="{{ small }}">
+                <table>
+                  <tbody>
+                  <template is="dom-repeat" items="[[ biddings ]]">
+                     <tr>
+                      <td style="font-family: Roboto Black;">[[ item.title ]]</td>
+                      <td>
+                        <paper-button style="color: blue;">Bid</paper-button>
+                      </td>
+                     </tr>
+                     <tr>
+                      <td style="font-style: italic;">[[ item.authors ]]</td>
+                     </tr>
+                     <tr>
+                      <td>[[ item.deadline ]]</td>
+                    </tr>
+                  </template>
+                  </tbody>
+                </table>
+              </template>
+            </div> 
+          </paper-card>
+         </div>
+
+         <template is="dom-if" if="{{ large }}">
+          <div class="vertical layout">
+            <paper-card>
+              <div class="card-content layout vertical center">
+                <span style="font-family: Roboto Black; font-size: 100px; " > [[ user.reviewsProvided ]] </span>
+                <h4>Reviews provided</h4>
+              </div>
+            </paper-card>
+            <paper-card>
+              <div class="card-content layout vertical center">
+                <span style="font-family: Roboto Black; font-size: 100px; " > [[ user.papersSubmitted ]] </span>
+                <h4>Papers submitted</h4>
+              </div>
+            </paper-card>
+          </div>
+         </template>
+      </div>
+      
+  </template>
+
+  <script>
+    class VolunteerCentral extends Polymer.Element {
+      static get is() {
+        return 'volunteer-central';
+      }
+
+      static get properties() {
+        return {
+          user: {},
+          reviews: {type: Array},
+          biddings: {type: Array},
+          conferences: {type: Array},
+          selectedConference: {type: String}
+        } 
+      }
+
+      constructor() {
+        super();
+        this.user = {};
+        this.user.firstName = "Maximilian";
+        this.user.lastName = "Power";
+        this.user.email = "max@power.com";
+        this.user.organisation = "Ludwig-Maximlians-Universität München";
+        this.user.interests = [{field: "Biology", value: 100}, 
+                              {field: "Psychology", value: 10},
+                              {field: "Kinesiology", value: 30}];
+        this.user.hasSignedAgreement = false;
+        this.user.reviewsProvided = 40;
+        this.user.papersSubmitted = 35;
+
+        this.selectedConference = "CNHK18";
+
+        var review1 = {
+          title: "Papers: Something to do when you have nothing else",
+          status: "Reviewed",
+          authors: "Mustermann, Doe, Wang",
+          field: "Social Science",
+          deadline: "01.04.18",
+          conference: "CNNF18"
+        }
+
+        var review2 = {
+          title: "Hope I die before I get Old: Conflicts between generations",
+          status:  "Open",
+          authors: "Mustermann, Doe, Wang",
+          field: "Social Science",
+          deadline: "01.04.18",
+          conference: "CNNF18"
+        }
+
+        var review3 = {
+          title: "Papers: Something to do when you have nothing else",
+          status: "Reviewed",
+          authors: "Mustermann, Doe, Wang",
+          field: "Social Science",
+          deadline: "01.04.18",
+          conference: "CNNF18"
+        }
+
+        var review4 = {
+          title: "Papers: Something to do when you have nothing else",
+          status:  "Open",
+          authors: "Mustermann, Doe, Wang",
+          field: "Social Science",
+          deadline: "01.04.18",
+          conference: "CNNF18"
+        }
+
+        var review5 = {
+          title: "Papers: Something to do when you have nothing else",
+          status: "Open",
+          authors: "Mustermann, Doe, Wang",
+          field: "Social Science",
+          deadline: "01.04.18",
+          conference: "CNNF18"
+        }
+        this.reviews = [];
+        this.reviews.push(review1);
+        this.reviews.push(review2);
+        this.reviews.push(review3);
+        this.reviews.push(review4);
+        this.reviews.push(review5);
+        this.reviews.push(review1);
+        this.reviews.push(review2);
+        this.reviews.push(review3);
+        this.reviews.push(review4);
+        this.reviews.push(review5);
+
+        this.biddings = [];
+        this.biddings.push(review1);
+        this.biddings.push(review2);
+        this.biddings.push(review3);
+        this.biddings.push(review4);
+        this.biddings.push(review5);
+        this.biddings.push(review1);
+        this.biddings.push(review2);
+        this.biddings.push(review3);
+        this.biddings.push(review4);
+        this.biddings.push(review5);
+        this.biddings.push(review1);
+        this.biddings.push(review2);
+        this.biddings.push(review3);
+        this.biddings.push(review4);
+        this.biddings.push(review5);
+
+        var conference1 = "CNHK18";
+        var conference2 = "CNNF17";
+        var conference3 = "SUPERCOMM19";
+        this.conferences = [];
+        this.conferences.push(conference1);
+        this.conferences.push(conference2);
+        this.conferences.push(conference3);
+      }
+    }
+
+    window.customElements.define((VolunteerCentral).is, VolunteerCentral);
+  </script>
+</dom-module>

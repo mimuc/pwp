@@ -1,11 +1,31 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/sumasy-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/pages/author-profile.html",
+    "src/pages/author-submissions.html",
+    "src/pages/call-for-papers.html",
+    "src/pages/cfp-detail.html",
+    "src/pages/conf-chair-dashboard.html",
+    "src/pages/edit-rebuttal.html",
+    "src/pages/edit-review.html",
+    "src/pages/edit-submission.html",
+    "src/pages/home.html",
+    "src/pages/log-in.html",
+    "src/pages/review-details.html",
+    "src/pages/review-overview.html",
+    "src/pages/reviewer-profile-tab-one.html",
+    "src/pages/reviewer-profile-tab-two.html",
+    "src/pages/reviewer-profile-tab-three.html",
+    "src/pages/review-request.html",
+    "src/pages/reviewer-overview.html",
+    "src/pages/reviewer-profile.html",
+    "src/pages/sign-up.html",
+    "src/pages/submission-decision.html",
+    "src/pages/submission-details.html",
+    "src/pages/submission-overview.html",
+    "src/pages/sumasy-page404.html",
+    "src/pages/volunteer-central.html"
   ],
   "sources": [
     "src/**/*",
@@ -14,7 +34,7 @@
   ],
   "extraDependencies": [
     "manifest.json",
-    "bower_components/webcomponentsjs/*.js"
+    "bower_components/**/*"
   ],
   "lint": {
     "rules": ["polymer-2"]

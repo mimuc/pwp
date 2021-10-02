@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="review-details">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+    <div class="card">
+      <h2>Review</h2>
+      <p> TODO pass details from outside --> properties</p>
+      <h3>The Review</h3>
+      <p>I did not like this paper</p>
+      <h4>Score: <span>[[ score ]]</span></h4>
+
+      <p>
+        <a href="#/submission-details">Back to Submission Details</a>
+      </p>
+    </div>
+
+  </template>
+
+  <script>
+    class ReviewDetails extends Polymer.Element {
+      static get is() {
+        return 'review-details';
+      }
+      static get properties() {
+        return {
+          score: {
+            type: Number,
+            value: 3
+          }
+        }
+      }
+    }
+
+    window.customElements.define((ReviewDetails).is, ReviewDetails);
+  </script>
+</dom-module>
